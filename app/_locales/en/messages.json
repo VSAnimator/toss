@@ -1,0 +1,10 @@
+{
+  "appName": {
+    "message": "Summarize-Me",
+    "description": "The name of the application"
+  },
+  "appDescription": {
+    "message": "An extension that summarizes a web page&#39;s text or selected text.",
+    "description": "The description of the application"
+  }
+}
