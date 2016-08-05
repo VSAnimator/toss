@@ -2,6 +2,7 @@
   "name": "Summarize Me",
   "author": "Samuel Lam",
   "version": "0.0.1",
+  "offline_enabled": true,
   "manifest_version": 2,
   "description": "An extension that summarizes a web page or selected text.",
   "icons": {
@@ -17,6 +18,7 @@
   },
   "permissions": [
     "tabs",
+    "activeTab",
     "http://*/*",
     "https://*/*"
   ],
