@@ -30,7 +30,7 @@ button  {
 }
 
 #box {
-  box-sizing:  border-box;
+  box-sizing: border-box;
   border-radius: 2px;
   background-clip: padding-box;
   background-color: white;
