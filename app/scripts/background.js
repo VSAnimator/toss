@@ -7,9 +7,7 @@ chrome.runtime.onInstalled.addListener(function (details) {
 chrome.browserAction.setBadgeText({ text: '\'Me!' });
 
 function sendSummary(info, tab) {
-  chrome.tabs.sendMessage(
-    tab.id,
-    {from: 'contextMenu', subject: info});
+  chrome.tabs.sendMessage(tab.id, {from: 'contextMenu', subject: info});
 }
 
 chrome.contextMenus.create({
