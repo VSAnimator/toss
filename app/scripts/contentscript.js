@@ -24,7 +24,7 @@ const query = {
   'sentnum': 8
 }
 const headers = {
-  'X-Mashape-Key': 'GKUxfWNa1wmshSuxbx1vcmEOSpAbp1Y39XmjsnUMoS1y4JZkSo',
+  'X-Mashape-Key': 't51BzicIKWmshVEZAhkrffrXhTJfp115oBTjsn4KXT6UFVfX4l',
   'Content-Type': 'application/json',
   'Accept': 'application/json'
 }
@@ -50,8 +50,12 @@ chrome.runtime.onMessage.addListener(function (req, sender, res) {
   if ((req.from === 'popup') && (req.subject === 'DOMInfo')) {
     if (sendAnswer === null) promisedFetch.then(() => res(sendAnswer));
     else res(sendAnswer);
+
+    // demo purposes
+    // let x = {sentences: demoSent, title: document.title}
+    // res(x);
   }
-  return true;
+  // return true;
 });
 
 // Handle context menu events
@@ -101,3 +105,21 @@ chrome.runtime.onMessage.addListener(function (req, sender, res) {
       console.error('ERROR', err)
     })
 });
+
+// fetch to the alchemy API
+// var newPre = document.createElement('pre');
+// newPre.id = 'summarizeMeResult';
+// newPre.innerHTML = 'This is the content for alchemy';
+// document.body.appendChild(newPre);
+
+// console.log('this is the location', document.location.href);
+
+// fetch(`http://localhost:8000/summarize/${document.location.href}`)
+//   .then(r => {
+//     if (r.status !== 200) return r.json().then(body => Promise.reject(body))
+//     return r
+//   })
+//   .then(r => r.json())
+//   .then(info => { document.getElementById('summarizeMeResult').innerHTML = JSON.stringify(info, null, 2) })
+//   .catch(error => console.error(error))
+
