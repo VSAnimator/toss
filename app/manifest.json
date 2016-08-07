@@ -19,6 +19,7 @@
   "permissions": [
     "tabs",
     "activeTab",
+    "contextMenus",
     "http://*/*",
     "https://*/*"
   ],
@@ -33,10 +34,12 @@
         "https://*/*"
       ],
       "js": [
+        "scripts/jquery-3.1.0.min.js",
         "scripts/contentscript.js"
       ],
       "run_at": "document_end",
-      "all_frames": false
+      "all_frames": false,
+      "css": ["styles/custom.css"]
     }
   ],
   "omnibox": {

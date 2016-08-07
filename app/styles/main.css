@@ -1,3 +1,39 @@
 body {
   padding: 20px;
+  width: 400px;
+  height: 460px;
+  font-family: 'Verdana';
+  background-color: #F3F2EE;
+}
+
+hr {
+  margin-bottom: 10px;
+}
+
+h1 {
+  font-family: 'Verdana';
+}
+
+li {
+  padding: 8px;
+  right: 3px;
+}
+
+h4 {
+  text-align: right;
+  padding-bottom: 20px;
+}
+
+button  {
+  margin-top: 10px;
+  outline: none;
+}
+
+#box {
+  box-sizing: border-box;
+  border-radius: 2px;
+  background-clip: padding-box;
+  background-color: white;
+  margin-bottom: 20px;
+  padding: 5px;
 }
