@@ -1,19 +1,36 @@
 'use strict';
 
+const path = require('path');
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-
+const watson = require('watson-developer-cloud');
 const chalk = require('chalk');
-const unirest = require('unirest');
+const keys = require('../../../config');
 
 const app = express();
 app.use(bodyParser.json());
 app.use(cors());
 
-app.post('/summarize', (req, res) => {
-
+const analyzer = watson.alchemy_language({
+  api_key: keys.alchemyKey
 });
+
+app.get('/summarize/:url', (req, res) => {
+  analyzer.combined({
+    url: req.params.url,
+    extract: 'doc-sentiment,keywords,concepts,taxonomy'
+  }, (err, info) => {
+    if (err) return res.status(500).json(err)
+    delete info.usage
+    delete info.totalTransactions
+    res.json(info)
+  })
+})
+
+app.get('/', (req, res) => {
+  res.sendFile(path.resolve(__dirname, '../options.html'))
+})
 
 const PORT = process.env.port || 8000;
 
