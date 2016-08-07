@@ -1,0 +1,16 @@
+#summarizeMeID {
+  padding: 15px;
+  width: auto;
+  font-family: 'Verdana';
+  font-size: 13.5px;
+  background-color: #F3F2EE;
+}
+
+#summarizeMeUL {
+  margin-bottom: 10px;
+}
+
+
+#summarizeMeButton {
+  float: right;
+}
