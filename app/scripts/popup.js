@@ -3,7 +3,6 @@
 console.log('\'Allo \'Allo! Popup running :)');
 
 function setDOMInfo(info) {
-  console.log('what is info', info);
   var newH1 = document.createElement('h1');
   newH1.innerHTML = info.title;
   document.getElementById('title').appendChild(newH1);
