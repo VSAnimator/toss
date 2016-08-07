@@ -1,11 +1,11 @@
 'use strict';
 
+const path = require('path');
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-
+const watson = require('watson-developer-cloud');
 const chalk = require('chalk');
-const unirest = require('unirest');
 
 const app = express();
 app.use(bodyParser.json());
