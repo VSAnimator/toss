@@ -10,21 +10,22 @@ const keys = require('../../../config');
 
 const app = express();
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 
 const analyzer = watson.alchemy_language({
   api_key: keys.alchemyKey
 });
 
-app.get('/summarize/:url', (req, res) => {
+app.get('/summarize', (req, res) => {
   analyzer.combined({
-    url: req.params.url,
+    url: req.query.url,
     extract: 'doc-sentiment,keywords,concepts,taxonomy'
   }, (err, info) => {
-    if (err) return res.status(500).json(err)
-    delete info.usage
-    delete info.totalTransactions
-    res.json(info)
+    if (err) return res.status(500).json(err);
+    delete info.usage;
+    delete info.totalTransactions;
+    res.json(info);
   })
 })
 

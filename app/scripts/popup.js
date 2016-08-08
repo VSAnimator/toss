@@ -1,6 +1,12 @@
 'use strict';
+let currentUrl;
 
 console.log('\'Allo \'Allo! Popup running :)');
+
+chrome.tabs.getSelected(null, function(tab) {
+    currentUrl = tab.url;
+    console.log('curr URL', currentUrl);
+});
 
 function setDOMInfo(info) {
   var newH1 = document.createElement('h1');
@@ -26,3 +32,4 @@ window.addEventListener('DOMContentLoaded', function () {
         setDOMInfo);
   });
 });
+

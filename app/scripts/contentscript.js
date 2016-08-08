@@ -5,8 +5,6 @@ console.log('this content script ran :)');
 let clickedEl,
     sendAnswer = null;
 
-const demoText = 'If you found that to be the case, that’s okay. You’ll likely find some efficiencies in the coming days that will get those times down. For example, you start to use a Text Expander snippet for your evening journal or place your supplements next to your bathroom sink. For now, let’s take a few of those extra steps off of your routine. Remember, the core purpose of evening ritual is to have a consistent step-by-step sequence you go through to get quality sleep. You can add 1 or 2 actions to set your next day up. Getting that gym bag ready or planning your next day may even help you fall asleep. But doing too much too fast means that the ritual will be difficult to maintain for the long haul.';
-
 const demoSent = [
         "Document summarization is another.",
         "Generally, there are two approaches to automatic summarization: extraction and abstraction.",
@@ -55,7 +53,7 @@ chrome.runtime.onMessage.addListener(function (req, sender, res) {
     // let x = {sentences: demoSent, title: document.title}
     // res(x);
   }
-  // return true;
+  return true;
 });
 
 // Handle context menu events
@@ -75,17 +73,18 @@ chrome.runtime.onMessage.addListener(function (req, sender, res) {
   closeButton.id = 'summarizeMeButton';
   closeButton.innerHTML = 'Hide';
 
-  $('#summarizeMeButton').click(function() {
-      $('#summarizeMeID').toggle();
-  });
-
   // append elements
   newDiv.appendChild(newUl);
   clickedEl.appendChild(newDiv);
   newUl.appendChild(closeButton);
 
+  $('#summarizeMeButton').click(function() {
+      $('#summarizeMeID').toggle();
+  });
+
   query['text'] = req.subject.selectionText;
   query['url'] = '';
+  query['sentnum'] = 5;
 
   fetch(fetchURL, {
     method: 'POST',
@@ -106,20 +105,20 @@ chrome.runtime.onMessage.addListener(function (req, sender, res) {
     })
 });
 
-// fetch to the alchemy API
-// var newPre = document.createElement('pre');
-// newPre.id = 'summarizeMeResult';
-// newPre.innerHTML = 'This is the content for alchemy';
-// document.body.appendChild(newPre);
+var newPre = document.createElement('pre');
+newPre.id = 'summarizeMeResult';
+document.body.appendChild(newPre);
 
-// console.log('this is the location', document.location.href);
-
-// fetch(`http://localhost:8000/summarize/${document.location.href}`)
-//   .then(r => {
-//     if (r.status !== 200) return r.json().then(body => Promise.reject(body))
-//     return r
-//   })
-//   .then(r => r.json())
-//   .then(info => { document.getElementById('summarizeMeResult').innerHTML = JSON.stringify(info, null, 2) })
-//   .catch(error => console.error(error))
-
+fetch(`http://localhost:8000/summarize/?url=${document.location.href}`)
+  .then(r => {
+    if (r.status !== 200) return r.json().then(body => Promise.reject(body));
+    return r;
+  })
+  .then(r => r.json())
+  .then(info => {
+    console.log('this is info', info);
+    document.getElementById('summarizeMeResult').innerHTML = JSON.stringify(info, null, 2);
+    console.log('got in the info part');
+    $('head').append('<ul><li><a href="#tab-description">Description</a></li><li><a href="#tab-shipping">Shipping</a></li><li><a href="#tab-returns">Returns</a></li></ul><div id="tab-description" class="mytabs"></div><div id="tab-shipping" class="mytabs"></div><div id="tab-returns" class="mytabs"></div>');
+  })
+  .catch(e => console.error(e));
