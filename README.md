@@ -12,7 +12,7 @@ Context Menu
 ![Context Menu](app/images/context-menu-demo2.png)
 
 ## Implementation
-Summarize Me uses the [Text Summarization API](https://market.mashape.com/textanalysis/text-summarization) to summarize and extract important text from a URL or user selected text. Text Summarization uses Natural Language Processing and Machine Learning technologies.
+Summarize Me uses the [Text Summarization API](https://market.mashape.com/textanalysis/text-summarization) to extract and summarize important text from a URL or user selected text. Text Summarization uses Natural Language Processing and Machine Learning technologies to process text.
 
 This chrome extension also dabbles with [IBM Watson Developer Cloud](https://www.ibm.com/watson/developercloud/alchemy-language.html) to provide sentiment analysis of the current page.
 
