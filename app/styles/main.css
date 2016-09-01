@@ -28,8 +28,8 @@ button  {
   margin-top: 10px;
   outline: none;
 }
-
-#box {
+/* OB: I tend to think id selecting/styling should be used rarely—using classes encourages writing reusable (instead of one-off) styles */
+#box { 
   box-sizing: border-box;
   border-radius: 2px;
   background-clip: padding-box;

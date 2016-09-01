@@ -6,7 +6,7 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const watson = require('watson-developer-cloud');
 const chalk = require('chalk');
-const keys = require('../../../config');
+const keys = require('../../../config'); // OB: consider using gitignore and/or environment variables instead of putting a config file entirely outside of the project folder. keeps your project self-contained to one folder
 
 const app = express();
 app.use(bodyParser.json());

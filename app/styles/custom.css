@@ -10,6 +10,7 @@
   margin-bottom: 10px;
 }
 
+/* OB: similar as mentioned elsewhere, I think you could make this a class instead, and if so it'd probably be something like `.pull-right` (a name I lifted from bootstrap) */
 #summarizeMeButton {
   float: right;
 }
