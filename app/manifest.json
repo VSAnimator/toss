@@ -1,10 +1,10 @@
 {
-  "name": "Summarize Me",
-  "author": "Samuel Lam",
+  "name": "Terms Of Service Summary",
+  "author": "Vishnu Sarukkai, Melinda Wang and Alexandre Bucquet (inspired by Samuel Lam)",
   "version": "0.0.1",
   "offline_enabled": true,
   "manifest_version": 2,
-  "description": "An extension that summarizes a web page or selected text.",
+  "description": "An extension that distills Terms of Services into a few actionable items.",
   "icons": {
     "16": "images/summarize-16.png",
     "128": "images/summarize-icon.png"
