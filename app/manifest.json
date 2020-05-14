@@ -21,7 +21,8 @@
     "activeTab",
     "contextMenus",
     "http://*/*",
-    "https://*/*"
+    "https://*/*",
+    "<all_urls>"
   ],
   "options_ui": {
     "page": "options.html",

@@ -28,7 +28,7 @@ const headers = {
   'Content-Type': 'application/json',
   'Accept': 'application/json'
 }
-const fetchURL = 'https://textanalysis-text-summarization.p.mashape.com/text-summarizer';
+// const fetchURL = 'https://textanalysis-text-summarization.p.mashape.com/text-summarizer';
 
 // fetch URL summary
 // var promisedFetch = fetch(fetchURL, {
@@ -85,42 +85,42 @@ chrome.runtime.onMessage.addListener(function (req, sender, res) {
   clickedEl.appendChild(newDiv);
   newUl.appendChild(closeButton);
 
-  query['text'] = req.subject.selectionText;
-  query['url'] = '';
+  // query['text'] = req.subject.selectionText;
+  // query['url'] = '';
 
-  fetch(fetchURL, {
-    method: 'POST',
-    headers: headers,
-    body: JSON.stringify(query)
-  })
-    .then(r => r.json())
-    .then(answer => {
-      answer.sentences.forEach(function(sentence, idx) {
-        var newLi = document.createElement('li');
-        newLi.id = `sentence-${idx}`;
-        newLi.innerHTML = sentence;
-        newUl.appendChild(newLi);
-      })
-    })
-    .catch(err => {
-      console.error('ERROR', err)
-    })
+  // fetch(fetchURL, {
+  //   method: 'POST',
+  //   headers: headers,
+  //   body: JSON.stringify(query)
+  // })
+  //   .then(r => r.json())
+  //   .then(answer => {
+  //     answer.sentences.forEach(function(sentence, idx) {
+  //       var newLi = document.createElement('li');
+  //       newLi.id = `sentence-${idx}`;
+  //       newLi.innerHTML = sentence;
+  //       newUl.appendChild(newLi);
+  //     })
+  //   })
+  //   .catch(err => {
+  //     console.error('ERROR', err)
+  //   })
 });
 
 // fetch to the alchemy API
-var newPre = document.createElement('pre');
-newPre.id = 'summarizeMeResult';
-newPre.innerHTML = 'This is the content for alchemy';
-document.body.appendChild(newPre);
+// var newPre = document.createElement('pre');
+// newPre.id = 'summarizeMeResult';
+// newPre.innerHTML = 'This is the content for alchemy';
+// document.body.appendChild(newPre);
 
-console.log('this is the location', document.location.href);
+// console.log('this is the location', document.location.href);
 
-fetch(`http://localhost:8000/summarize/${document.location.href}`)
-  .then(r => {
-    if (r.status !== 200) return r.json().then(body => Promise.reject(body))
-    return r
-  })
-  .then(r => r.json())
-  .then(info => { document.getElementById('summarizeMeResult').innerHTML = JSON.stringify(info, null, 2) })
-  .catch(error => console.error(error))
+// fetch(`http://localhost:8000/summarize/${document.location.href}`)
+//   .then(r => {
+//     if (r.status !== 200) return r.json().then(body => Promise.reject(body))
+//     return r
+//   })
+//   .then(r => r.json())
+//   .then(info => { document.getElementById('summarizeMeResult').innerHTML = JSON.stringify(info, null, 2) })
+//   .catch(error => console.error(error))
 
