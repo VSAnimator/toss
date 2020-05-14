@@ -6,28 +6,37 @@
 function DOMtoString(document_root) {
     var html = '',
         node = document_root.firstChild;
+    var x = "Hello there";
+    var y = "sad";
     while (node) {
+        var newString = '';
         switch (node.nodeType) {
-        case Node.ELEMENT_NODE:
-            html += node.outerHTML;
-            break;
-        case Node.TEXT_NODE:
-            html += node.nodeValue;
-            break;
-        case Node.CDATA_SECTION_NODE:
-            html += '<![CDATA[' + node.nodeValue + ']]>';
-            break;
-        case Node.COMMENT_NODE:
-            html += '<!--' + node.nodeValue + '-->';
-            break;
-        case Node.DOCUMENT_TYPE_NODE:
-            // (X)HTML documents are identified by public identifiers
-            html += "<!DOCTYPE " + node.name + (node.publicId ? ' PUBLIC "' + node.publicId + '"' : '') + (!node.publicId && node.systemId ? ' SYSTEM' : '') + (node.systemId ? ' "' + node.systemId + '"' : '') + '>\n';
-            break;
+            case Node.ELEMENT_NODE:
+                newString = node.textContent + " "; //node.innerHTML;
+                break;
+            case Node.TEXT_NODE:
+                newString = node.textContent + " "; //node.nodeValue;
+                break;
+            case Node.CDATA_SECTION_NODE:
+                newString = ""; //'<![CDATA[' + node.nodeValue + ']]>';
+                break;
+            case Node.COMMENT_NODE:
+                newString = ""; //'<!--' + node.nodeValue + '-->';
+                break;
+            case Node.DOCUMENT_TYPE_NODE:
+                // (X)HTML documents are identified by public identifiers
+                newString = ""; //"<!DOCTYPE " + node.name + (node.publicId ? ' PUBLIC "' + node.publicId + '"' : '') + (!node.publicId && node.systemId ? ' SYSTEM' : '') + (node.systemId ? ' "' + node.systemId + '"' : '') + '>\n';
+                break;
         }
+        
+        if (newString.toLowerCase().indexOf("terms of use") != -1 || newString.toLowerCase().indexOf("terms of service") != -1) {
+            console.log(newString);
+            return x;
+        }
+        html += newString;
         node = node.nextSibling;
     }
-    return html;
+    return y;
 }
 
 // send a message back to popup.js (calls the Listener there)
