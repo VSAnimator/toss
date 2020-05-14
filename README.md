@@ -1,7 +1,9 @@
 # Summarize Me
 
-Maintainer: [Samuel Lam](https://github.com/samuelklam)
+TODO: add our git links
+Maintainer: [Vishnu Sarukkai, Melinda Wang and Alexandre Bucquet](https://github.com/samuelklam)
 
+TODO: change summary and write up a detailed description
 > A nifty Chrome Extension that provides a summary of the current web page or user selected text through a (right-click) context menu action.
 
 ## Examples
