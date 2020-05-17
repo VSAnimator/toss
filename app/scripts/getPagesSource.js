@@ -67,6 +67,19 @@ function DOMtoString(document_root) {
     return sentences;
 }
 
+// send a message back to popup.js (calls the Listener there)
+chrome.runtime.sendMessage({
+    action: "getSource",
+    source: DOMtoString(document)
+});
+
+// chrome.runtime.sendMessage({
+//     action: "editPage",
+//     source: editPage(document)
+// });
+
+
+
 
 /* OLD CASES for the switch
 switch (node.nodeType) {
@@ -131,9 +144,3 @@ var curNode = document_root.firstChild;
 
     return html;
 */
-
-// send a message back to popup.js (calls the Listener there)
-chrome.runtime.sendMessage({
-    action: "getSource",
-    source: DOMtoString(document)
-});

@@ -19,7 +19,6 @@ function onWindowLoad() {
       message.innerText = 'There was an error injecting script : \n' + chrome.runtime.lastError.message;
     }
   });
-
 }
 
 // define an onload function: when the page is loaded,

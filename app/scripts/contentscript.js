@@ -28,6 +28,8 @@ const headers = {
   'Content-Type': 'application/json',
   'Accept': 'application/json'
 }
+
+
 // const fetchURL = 'https://textanalysis-text-summarization.p.mashape.com/text-summarizer';
 
 // fetch URL summary

@@ -13,3 +13,7 @@
 #summarizeMeButton {
   float: right;
 }
+
+span.highlight-class{
+  background-color: rgb(100, 255, 71);
+}

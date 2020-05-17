@@ -36,7 +36,8 @@
       ],
       "js": [
         "scripts/jquery-3.1.0.min.js",
-        "scripts/contentscript.js"
+        "scripts/contentscript.js",
+        "scripts/highlight.js"
       ],
       "run_at": "document_end",
       "all_frames": false,
