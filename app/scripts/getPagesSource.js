@@ -7,12 +7,14 @@
 //  https://www.w3schools.com/jsref/jsref_bold.asp
 
 
+// helper to check whether a piece of text contains terms of interest
 function containsTOS(text){
-    return (text.search("Terms of Use") != -1) || (text.search("Terms of Service") != -1)
+    return (text.search("Terms of Use") != -1) || (text.search("Terms of Service") != -1);
 }
 
+// cleans up the text by removing bad characters and lines that are mostly code
 function processText(text){
-    text = text.replace(/[^a-z\n\s]/gi, '')
+    text = text.replace(/[^a-z\n\s.]/gi, '')
     var lines = text.split("\n");
     var newText = "";
     for(i = 0; i < lines.length; i++){
@@ -23,27 +25,46 @@ function processText(text){
     return newText;
 }
 
-// convert the document to plain text
-// TODO: make this function extract text only
-function DOMtoString(document_root) {
-    var html = '',
-        node = document_root.firstChild;
+// very basic test to isolate one sentence from instagram
+function filterSentence(sentence){
+    return ((sentence.search("govern") != -1) && (sentence.search("State") != -1));
+}
 
+// convert the document to plain text
+function DOMtoString(document_root) {
+    // 1. Grab all the text from the page
+    var pageText = '',
+        node = document_root.firstChild;
     var isTOS = false;
 
     while (node) {
         var newString = '';
         if ((node.nodeType == Node.ELEMENT_NODE) || (node.nodeType == Node.TEXT_NODE)) {
             if(!isTOS && containsTOS(node.textContent)){ isTOS = true; }
-            html += processText(node.textContent) + " ";
+            pageText += processText(node.textContent) + " ";
         }
         node = node.nextSibling;
     }
-    // very basic test to see if we are on a TOS or not
-    if(isTOS){
-        return html;
+
+
+    // 2. very basic test to see if we are on a TOS or not
+    if(!isTOS){
+        return "This isn't a TOS page!";
     }
-    return "This isn't a TOS page!";
+
+    // 3. Use "Regex" to find the appropriate sentences
+    var sentences = []
+    var lines = pageText.split("\n");
+    for(i = 0; i < lines.length; i++){
+        var curSentences = lines[i].split(".");
+        for(j = 0; j < curSentences.length; j++){
+            if(filterSentence(curSentences[j])){
+                sentences.push(curSentences[j]);
+            }
+        }
+    }
+
+    return sentences;
 }
 
 
