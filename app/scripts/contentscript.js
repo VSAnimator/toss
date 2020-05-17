@@ -50,10 +50,6 @@ chrome.runtime.onMessage.addListener(function (req, sender, res) {
   if ((req.from === 'popup') && (req.subject === 'DOMInfo')) {
     if (sendAnswer === null) promisedFetch.then(() => res(sendAnswer));
     else res(sendAnswer);
-
-    // demo purposes
-    // let x = {sentences: demoSent, title: document.title}
-    // res(x);
   }
   return true;
 });

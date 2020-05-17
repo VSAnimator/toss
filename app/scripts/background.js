@@ -4,7 +4,8 @@ chrome.runtime.onInstalled.addListener(function (details) {
   console.log('previousVersion', details.previousVersion);
 });
 
-chrome.browserAction.setBadgeText({ text: 'Mely!' });
+// this sets the icon text in the chrome toolbar
+chrome.browserAction.setBadgeText({ text: 'Melo!' });
 
 function sendSummary(info, tab) {
   chrome.tabs.sendMessage(tab.id, {from: 'contextMenu', subject: info});

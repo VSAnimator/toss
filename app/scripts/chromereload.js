@@ -1,6 +1,8 @@
 'use strict';
 
-// TODO: add comments explaining what this all does
+// This file allows changes in files to be immediately propagated to the
+// chrome-loaded extension. Excitig times!
+// TODO: probably remove this file once we roll out the extension
 const filesInDirectory = dir => new Promise (resolve =>
 
     dir.createReader ().readEntries (entries =>
