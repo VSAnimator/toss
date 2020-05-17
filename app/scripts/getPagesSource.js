@@ -12,7 +12,9 @@ function DOMtoString(document_root) {
     var html2 = document_root.documentElement.innerHTML;
     var dom = new JSDOM(html2);
     return html2;
+
     while (node) {
+        var newString = '';
         switch (node.nodeType) {
         case Node.ELEMENT_NODE:
             //html += node.
@@ -32,8 +34,6 @@ function DOMtoString(document_root) {
             html += ""; //"<!DOCTYPE " + node.name + (node.publicId ? ' PUBLIC "' + node.publicId + '"' : '') + (!node.publicId && node.systemId ? ' SYSTEM' : '') + (node.systemId ? ' "' + node.systemId + '"' : '') + '>\n';
             break;
         }
-        node = node.nextSibling;
-    }
 
     // vary basic test to see if we are on a TOS or not
     if((html.search("Terms of Use") != -1)|| (html.search("Terms of Service") != -1)){
@@ -41,6 +41,9 @@ function DOMtoString(document_root) {
     }
 
     return "This isn't a TOS page!";
+=======
+    return y;
+>>>>>>> 9e05661ed01b83a6e0a3d34c346594ab0d67247d
 }
 
 // send a message back to popup.js (calls the Listener there)
