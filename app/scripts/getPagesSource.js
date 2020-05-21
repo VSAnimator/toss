@@ -35,6 +35,18 @@ function highlightText(wordQuery){
     // }
 }
 
+// Let's have a dictionary of regex for each ToS element, start with 6 most impt to highlight
+// Making a txt file with common strings for each of these terms from TOSDR page
+/*
+var filterDict = {
+    govt: // Disclose info to the government: "enforcement" "government request" "lawful interception" "subpoena"
+    track: // Track you on other websites "DNT" header (Do Not Track), "track"
+    share: // Shares data with 3rd parties "share...information" "share...data"
+    sell: // Right to sell data in financial transactions
+    copyright: // Owns copyright on your content
+    court: // Waive right to go to court
+}*/
+
 // very basic test to isolate one sentence from instagram
 function filterSentence(sentence){
     return ((sentence.search("govern") != -1) && (sentence.search("State") != -1));
