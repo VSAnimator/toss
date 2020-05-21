@@ -12,6 +12,8 @@
   "default_locale": "en",
   "background": {
     "scripts": [
+      "scripts/jquery-3.1.0.min.js",
+      "scripts/mark.min.js",
       "scripts/chromereload.js",
       "scripts/background.js"
     ]
@@ -36,8 +38,7 @@
       ],
       "js": [
         "scripts/jquery-3.1.0.min.js",
-        "scripts/contentscript.js",
-        "scripts/highlight.js"
+        "scripts/contentscript.js"
       ],
       "run_at": "document_end",
       "all_frames": false,

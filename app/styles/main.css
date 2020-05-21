@@ -62,6 +62,10 @@ button  {
   outline: none;
 }
 
+mark{
+    background: #38D37F;
+}
+
 #box {
   box-sizing: border-box;
   border-radius: 7px;

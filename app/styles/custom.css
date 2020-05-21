@@ -14,6 +14,6 @@
   float: right;
 }
 
-span.highlight-class{
-  background-color: rgb(100, 255, 71);
+mark{
+    background: #38D37F;
 }
