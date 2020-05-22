@@ -53,7 +53,7 @@
       "19": "images/summarize-16.png",
       "38": "images/summarize-icon.png"
     },
-    "default_title": "Summarize-Me",
+    "default_title": "Terms of Service Summary",
     "default_popup": "popup.html"
   }
 }

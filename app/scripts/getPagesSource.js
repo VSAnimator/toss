@@ -7,7 +7,7 @@ function containsTOS(text){
 
 // cleans up the text by removing bad characters and lines that are mostly code
 function processText(text){
-    text = text.replace(/[^a-z\n\s.,?!-]/gi, '')
+    text = text.replace(/[^a-z\n\s.,?!-:;]/gi, '')
     var lines = text.split("\n");
     var newText = "";
     for(i = 0; i < lines.length; i++){
