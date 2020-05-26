@@ -38,7 +38,7 @@ function onWindowLoad() {
       }, function() {
         // error catching
         if (chrome.runtime.lastError) {
-          message.innerText = 'There was an error injecting script : \n' + chrome.runtime.lastError.message;
+          message.innerText = 'There was an error scanning the page : \n' + chrome.runtime.lastError.message;
         }
       });
     });

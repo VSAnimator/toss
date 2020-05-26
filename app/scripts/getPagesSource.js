@@ -18,10 +18,14 @@ function processText(text){
     return newText;
 }
 
-function highlightText(wordQuery){
+// highlight the given text of a different color for each category
+// KNOWN ISSUES:
+// ---> when we have hyperlinks, string doesn't get found
+// ---> in a bullet list, the segement to highlight might span a transition, which causes an issue
+function highlightText(wordQuery, category){
 
     var instance = new Mark(document.querySelector("div"));
-    var options = {"separateWordSearch": false};
+    var options = {"separateWordSearch": false, "className": category};
     instance.mark(wordQuery, options);
 }
 
@@ -57,8 +61,6 @@ function filterSentence(sentence){
     var toReturn = [];
     for (var i = 0; i < filterLength; i++) {
         if (filterDict[i].exec(sentence) !== null) {
-            console.log(filterKeys[i]);
-            console.log(sentence);
             toReturn.push(i);
         }
     }
@@ -94,15 +96,20 @@ function DOMtoString(document_root) {
         var curSentences = lines[i].split(". "); // Need a space to not fail on things like "U.S."
         for(j = 0; j < curSentences.length; j++){
             var filters = filterSentence(curSentences[j]);
-            for(f = 0; f < filters.length; f++){
-                var filterFound = filterKeys[filters[f]];
-                if(!(filterFound in sentences)){
-                    sentences[filterFound] = [];
+            if(filters.length > 0){
+                // store the filters
+                for(f = 0; f < filters.length; f++){
+                    var filterFound = filterKeys[filters[f]];
+                    if(!(filterFound in sentences)){
+                        sentences[filterFound] = [];
+                    }
+                    sentences[filterFound].push(curSentences[j]);
                 }
-                sentences[filterFound].push(curSentences[j]);
-            }
-            if(filters.length >= 0){
-                highlightText(curSentences[j]); // TODO: add highlighting of different colors
+
+                // highlighting
+                console.log(filters[0]);
+                console.log(curSentences[j])
+                highlightText(curSentences[j], filterKeys[filters[0]]);
             }
         }
     }

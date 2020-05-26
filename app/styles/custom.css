@@ -17,3 +17,27 @@
 mark{
     background: #38D37F;
 }
+
+mark.govt {
+    background: blue;
+}
+
+mark.track {
+    background: yellow;
+}
+
+mark.share {
+    background: green;
+}
+
+mark.sell {
+    background: red;
+}
+
+mark.copyright {
+    background: orange;
+}
+
+mark.court {
+    background: purple;
+}
