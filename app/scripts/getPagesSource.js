@@ -23,16 +23,6 @@ function highlightText(wordQuery){
     var instance = new Mark(document.querySelector("div"));
     var options = {"separateWordSearch": false};
     instance.mark(wordQuery, options);
-
-    // var td = $('div:contains(' + wordQuery + ')');
-
-    // // Make sure that this number exists
-    // if(td.length > 0){
-    //     var span = td.html().replace(
-    //         wordQuery,'<span class="highlight-class">'+wordQuery+'</span>'
-    //         );
-    //     var n = td.html(span);
-    // }
 }
 
 // Let's have a dictionary of regex for each ToS element, start with 6 most impt to highlight
@@ -58,10 +48,10 @@ var filterDict = [
 
 var filterLength = filterDict.length;
 
-// very basic test to isolate one sentence from instagram
+// iterate through the filter to see if a sentence is interesting
 function filterSentence(sentence){
     if (sentence.length > 1000) {
-        return -1;
+        return [];
     }
 
     var toReturn = [];
@@ -73,7 +63,6 @@ function filterSentence(sentence){
         }
     }
     return toReturn;
-    // return ((sentence.search("govern") != -1) && (sentence.search("State") != -1));
 }
 
 // convert the document to plain text
@@ -94,25 +83,31 @@ function DOMtoString(document_root) {
 
 
     // 2. very basic test to see if we are on a TOS or not
-    if(!isTOS){
-        return "This isn't a TOS page!";
+    if(!isTOS){ // TODO: this also picks up footers...
+        return null;
     }
 
     // 3. Use "Regex" to find the appropriate sentences
-    var sentences = []
+    var sentences = {} // initalize a dict storing what sentence belong to what clause
     var lines = pageText.split("\n");
     for(i = 0; i < lines.length; i++){
         var curSentences = lines[i].split(". "); // Need a space to not fail on things like "U.S."
         for(j = 0; j < curSentences.length; j++){
             var filters = filterSentence(curSentences[j]);
+            for(f = 0; f < filters.length; f++){
+                var filterFound = filterKeys[filters[f]];
+                if(!(filterFound in sentences)){
+                    sentences[filterFound] = [];
+                }
+                sentences[filterFound].push(curSentences[j]);
+            }
             if(filters.length >= 0){
-                sentences.push(curSentences[j]);
-                highlightText(curSentences[j]);
+                highlightText(curSentences[j]); // TODO: add highlighting of different colors
             }
         }
     }
 
-    return sentences;
+    return JSON.stringify(sentences);
 }
 
 // send a message back to popup.js (calls the Listener there)
