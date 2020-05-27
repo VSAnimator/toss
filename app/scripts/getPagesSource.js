@@ -7,12 +7,12 @@ function containsTOS(text){
 
 // cleans up the text by removing bad characters and lines that are mostly code
 function processText(text){
-    text = text.replace(/[^a-z\n\s.,?!-:;]/gi, '')
-    var lines = text.split("\n");
+    text = text.replace(/[^a-z\n\s.,?!-:;\"\']/gi, ' ');
+    var lines = text.split(/\n\r/);
     var newText = "";
     for(i = 0; i < lines.length; i++){
-        if(lines[i].split(" ").length > 20){ // Try to make sure 20 words in line?? Why? Alex prob saw something when writing this. Add a condition to make sure total length of line < 200? No lines seem too long (will put in diff part)
-            newText += lines[i];
+        if(lines[i].split(" ").length > 0){ // Try to make sure 20 words in line?? Why? Alex prob saw something when writing this. Add a condition to make sure total length of line < 200? No lines seem too long (will put in diff part)
+            newText +=  " " + lines[i];
         }
     }
     return newText;
@@ -93,7 +93,7 @@ function DOMtoString(document_root) {
     var sentences = {} // initalize a dict storing what sentence belong to what clause
     var lines = pageText.split("\n");
     for(i = 0; i < lines.length; i++){
-        var curSentences = lines[i].split(". "); // Need a space to not fail on things like "U.S."
+        var curSentences = lines[i].split(/\.(\s|\"|\')/); // Need a space to not fail on things like "U.S."
         for(j = 0; j < curSentences.length; j++){
             var filters = filterSentence(curSentences[j]);
             if(filters.length > 0){
@@ -107,8 +107,8 @@ function DOMtoString(document_root) {
                 }
 
                 // highlighting
-                console.log(filters[0]);
-                console.log(curSentences[j])
+                // console.log(filters[0]);
+                // console.log(curSentences[j])
                 highlightText(curSentences[j], filterKeys[filters[0]]);
             }
         }

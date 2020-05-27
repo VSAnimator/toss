@@ -1,11 +1,22 @@
 'use strict';
 
+// BUTTON SYNTAX:
+document.addEventListener('DOMContentLoaded', function () {
+    // back button
+    var settingsButton = document.getElementById("back button");
+    settingsButton.addEventListener('click', backToMain);
+
+    // close button
+    var closeButton = document.getElementById("close button");
+    closeButton.addEventListener('click', closeApp);
+});
+
 function closeApp() {
-  console.log('close');
+  window.close();
 }
 
 function backToMain() {
-  console.log('back to main');
+  chrome.browserAction.setPopup({popup: "popup.html"});
 }
 
 function checked(checkid, id) {

@@ -65,6 +65,7 @@
     "jquery": "^3.5.1",
     "nodemon": "^1.10.0",
     "requirejs": "^2.3.6",
+    "sentence-tokenizer": "^1.0.1",
     "unirest": "^0.5.0",
     "watson-developer-cloud": "^2.0.1"
   },
