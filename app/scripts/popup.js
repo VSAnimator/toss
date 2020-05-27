@@ -63,7 +63,12 @@ document.addEventListener('DOMContentLoaded', function () {
     var closeButton = document.getElementById("close button");
     closeButton.addEventListener('click', closeApp);
 
-    // TODO: category buttons
+    for(var i = 0; i < filterKeys.length; i++){
+      var category = filterKeys[i];
+      var categoryButton = document.getElementById(category + " button");
+      categoryButton.addEventListener('click', 
+        () => { goToHighlighted(category); });
+    }
 });
 
 function goToSettings() {
@@ -75,7 +80,7 @@ function closeApp() {
 }
 
 function goToHighlighted(id) {
-  console.log(id);
+  console.log("Scrolly-bois");
 }
 
 // define an onload function: when the page is loaded,
