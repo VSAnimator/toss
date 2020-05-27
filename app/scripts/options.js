@@ -16,7 +16,7 @@ function closeApp() {
 }
 
 function backToMain() {
-  chrome.browserAction.setPopup({popup: "popup.html"});
+  window.location.href="popup.html";
 }
 
 function checked(checkid, id) {

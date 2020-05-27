@@ -67,7 +67,7 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 function goToSettings() {
-  chrome.browserAction.setPopup({popup: "options.html"});
+  window.location.href="options.html";
 }
 
 function closeApp() {
