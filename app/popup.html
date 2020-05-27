@@ -3,7 +3,9 @@
   <head>
     <title>Terms of Service Summary</title>
     <link href="styles/main.css" rel="stylesheet">
+    <script src="scripts/popup.js"></script>
     <link href='http://fonts.googleapis.com/css?family=Lato&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   </head>
 
   <body>
@@ -14,48 +16,69 @@
           <span>Terms of Service</span>
           <span class="header-text-green">didn't read</span>
         </div>
-      </div>
-      <div class="info">
-        <div class="info-title">Government Access</div>
-        <ul class="info-list data" id="govt">
-          <li><span class="info-list-sub">WHAT</span>Text 1</li>
-          <li><span class="info-list-sub">WHO</span>Text 2</li>
-          <li><span class="info-list-sub">WHY</span>Text 3</li>
-        </ul>
+        <div class="setting button" onclick="goToSettings()"><i class="material-icons" style="font-size:24px;color:#B9B9B9;">settings</i></div>
+        <div class="close button" onclick="closeApp()"><i class="material-icons" style="font-size:24px;color:#B9B9B9;">clear</i></div>
       </div>
 
-      <div class="info">
-        <div class="info-title">Tracking you on Other Webistes</div>
-        <ul class="info-list data" id="tracking">
-        </ul>
+      <div class="info" id="govt">
+        <div>
+          <div class="info-title">Government Access</div>
+          <ul class="info-list data">
+            <li><span class="info-list-sub">WHAT</span>Text 1</li>
+            <li><span class="info-list-sub">WHO</span>Text 2</li>
+            <li><span class="info-list-sub">WHY</span>Text 3</li>
+          </ul>
+        </div>
+        <div class="arrow button" onclick="goToHighlighted('govt')"><i class="material-icons" style="font-size:24px;color:#B9B9B9;">arrow_forward</i></div>
       </div>
 
-      <div class="info">
-        <div class="info-title">Sharing Your Data</div>
-        <ul class="info-list data" id="share">
-        </ul>
+      <div class="info" id="tracking">
+        <div>
+          <div class="info-title">Tracking you on Other Websites</div>
+          <ul class="info-list data">
+          </ul>
+        </div>
+        <div class="arrow button" onclick="goToHighlighted('tracking')"><i class="material-icons" style="font-size:24px;color:#B9B9B9;">arrow_forward</i></div>
       </div>
 
-      <div class="info">
-        <div class="info-title">Selling Your Data</div>
-        <ul class="info-list data" id="sell">
-        </ul>
+      <div class="info" id="share">
+        <div>
+          <div class="info-title">Sharing Your Data</div>
+          <ul class="info-list data">
+          </ul>
+        </div>
+        <div class="arrow button" onclick="goToHighlighted('share')"><i class="material-icons" style="font-size:24px;color:#B9B9B9;">arrow_forward</i></div>
       </div>
 
-      <div class="info">
-        <div class="info-title">Ownership of your Content</div>
-        <ul class="info-list data" id="copyright">
-        </ul>
+      <div class="info" id="sell">
+        <div>
+          <div class="info-title">Selling Your Data</div>
+          <ul class="info-list data">
+          </ul>
+        </div>
+        <div class="arrow button" onclick="goToHighlighted('sell')"><i class="material-icons" style="font-size:24px;color:#B9B9B9;">arrow_forward</i></div>
       </div>
 
-      <div class="info">
-        <div class="info-title" id="court">Right to go to Court</div>
-        <ul class="info-list">
-          <!-- govt, track, share, sell, copyright, court
-          <li>Text 1</li>
-          <li>Text 2</li>
-          <li>Text 3</li>-->
-        </ul>
+      <div class="info hidden" id="copyright">
+        <div>
+          <div class="info-title">Ownership of your Content</div>
+          <ul class="info-list data" >
+          </ul>
+        </div>
+        <div class="arrow button" onclick="goToHighlighted('copyright')"><i class="material-icons" style="font-size:24px;color:#B9B9B9;">arrow_forward</i></div>
+      </div>
+
+      <div class="info hidden" id="court">
+        <div>
+          <div class="info-title">Right to go to Court</div>
+          <ul class="info-list">
+            <!--
+            <li>Text 1</li>
+            <li>Text 2</li>
+            <li>Text 3</li>-->
+          </ul>
+        </div>
+        <div class="arrow button" onclick="goToHighlighted('court')"><i class="material-icons" style="font-size:24px;color:#B9B9B9;">arrow_forward</i></div>
       </div>
 
 

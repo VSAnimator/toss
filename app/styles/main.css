@@ -9,6 +9,8 @@ body {
 .header {
   border-bottom: 1px solid #B9B9B9;
   padding-bottom: 17px;
+  display: flex;
+  flex-direction: row;
 }
 
 .header-text {
@@ -20,7 +22,37 @@ body {
   color: #38D37F;
 }
 
+.setting {
+  margin-left: 27%;
+}
+
+.close {
+  margin-left: 3%;
+}
+
+.arrow {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 6%;
+}
+
+.button:hover {
+  cursor: pointer;
+}
+
+.material-icons:hover {
+  color: #38D37F !important;
+}
+
+.hidden {
+  display: none !important;
+}
+
 .info {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
   margin-top: 15px;
   margin-bottom: 20px;
 }
@@ -68,4 +100,31 @@ button  {
   background-clip: padding-box;
   background-color: white;
   padding: 25px;
+}
+
+.tooltip {
+  box-sizing: border-box;
+  border-radius: 7px;
+  background-clip: padding-box;
+  background-color: white;
+  padding: 25px;
+}
+
+.back {
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  color: #B9B9B9;
+  padding-top: 4%;
+  padding-bottom: 2%;
+}
+
+.back-text {
+  padding-left: 2%;
+}
+
+.check-list {
+  margin-block-start: 5px;
+  list-style-type: none;
+  padding-inline-start: 28px;
 }

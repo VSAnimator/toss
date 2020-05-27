@@ -7,18 +7,39 @@
     <!-- endbuild -->
     <!-- build:css styles/main.css -->
     <link href="styles/main.css" rel="stylesheet">
+    <link href='http://fonts.googleapis.com/css?family=Lato&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <script src="scripts/options.js"></script>
     <!-- endbuild -->
   </head>
   <body>
-    <h1>Options feature pending</h1>
+    <div class="tooltip">
+      <div class="header">
+        <div class="logo"></div>
+        <div class="header-text">
+          <span>Terms of Service</span>
+          <span class="header-text-green">didn't read</span>
+        </div>
+        <div class="setting"><i class="material-icons" style="font-size:24px;color:#38D37F;">settings</i></div>
+        <div class="close button" onclick="closeApp()"><i class="material-icons" style="font-size:24px;color:#B9B9B9;">clear</i></div>
+      </div>
 
-    <!-- build:js scripts/options-vendor.js -->
-    <!-- bower:js -->
-    <!-- endbower -->
-    <!-- endbuild -->
+      <div class="back">
+        <div class="button" onclick="backToMain()"><i class="material-icons" style="font-size:24px;color:#B9B9B9;">arrow_back</i></div>
+        <div class="back-text">Back to Main</div>
+      </div>
 
-    <!-- build:js scripts/options.js -->
-    <script src="scripts/options.js"></script>
-    <!-- endbuild -->
+      <div>
+        <div class="info-title">I want to see...</div>
+        <ul class="check-list">
+          <li><input type="checkbox" onclick="checked(this.id, 'govt')" checked>Government access to my data</li>
+          <li><input type="checkbox" onclick="checked(this.id, 'tracking')" checked>Tracking & Third party sites</li>
+          <li><input type="checkbox" onclick="checked(this.id, 'share')" checked>How my data is shared</li>
+          <li><input type="checkbox" onclick="checked(this.id, 'sell')" checked>If my data is sold</li>
+          <li><input type="checkbox" onclick="checked(this.id, 'copyright')">Who owns my content</li>
+          <li><input type="checkbox" onclick="checked(this.id, 'court')">My litigation rights</li>
+        </ul>
+      </div>
+    </div>
   </body>
 </html>

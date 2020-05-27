@@ -44,6 +44,18 @@ function onWindowLoad() {
     });
 }
 
+function goToSettings() {
+  console.log('go to settings');
+}
+
+function closeApp() {
+  console.log('close');
+}
+
+function goToHighlighted(id) {
+  console.log(id);
+}
+
 // define an onload function: when the page is loaded,
 // run the function above to grab the text
 window.onload = onWindowLoad;
