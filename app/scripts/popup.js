@@ -5,14 +5,17 @@ function displayText(category, textList){
   var numChildren = document.getElementById("list " + category).childNodes.length;
   // Okay so as long as we don't mess with the html format numChildren will be 1 before anything is entered, but even comments will mess this up
   // TEMPORARY FIX
+  console.log(numChildren)
   if (numChildren > 1) {
     return;
   }
+  console.log(textList)
   for(var i = 0; i < textList.length; i++){
     var node = document.createElement("li");
     node.classList.add("info-list-sub"); 
     node.textContent = textList[i];                      
     document.getElementById("list " + category).appendChild(node);
+    console.log(textList[i])
   }
 }
 
@@ -23,7 +26,7 @@ chrome.runtime.onMessage.addListener(function(request, sender) {
     if(request.source === null){
       message.innerText = "This isn't a Terms of Service page!";
     }
-
+    console.log("Listener hit")
     var results = JSON.parse(request.source);
     for(var category in results){
       displayText(category, results[category]);

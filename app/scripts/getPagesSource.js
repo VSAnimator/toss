@@ -81,10 +81,10 @@ function filterSentence(sentence){
         return [];
     }
 
-    if (slashCount > 3) {
+    /*if (slashCount > 3) {
         console.log("slash filtered: " + sentence);
         return [];
-    }
+    }*/
 
     if (colonCount > 3) {
         console.log("colon filtered: " + sentence);
@@ -150,6 +150,7 @@ function DOMtoString(document_root) {
                         sentences[filterFound].push(fineSentences[k]);
                     }
 
+                    console.log(fineSentences[k])
                     // highlighting
                     highlightText(fineSentences[k], filterKeys[filters[0]]);
                 }
