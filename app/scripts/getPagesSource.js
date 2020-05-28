@@ -59,10 +59,32 @@ var filterLength = filterDict.length;
 
 // iterate through the filter to see if a sentence is interesting
 function filterSentence(sentence){
+    // Add some checks here
     if (sentence.length > 1000) {
         return [];
     }
 
+    // Let's identify some strings that indicate parsing has messed up
+    var urlCount = (sentence.match(/Url/g) || []).length; // If encoding Urls in page
+    var imgCount = (sentence.match(/img|svg|png/gi) || []).length; // If code embedding images
+    var slashCount = (sentence.match(/\//g) || []).length; // If url string(s)
+
+    if (urlCount > 0) {
+        console.log("URL filtered: " + sentence);
+        return [];
+    }
+
+    if (imgCount > 0) {
+        console.log("img filtered: " + sentence);
+        return [];
+    }
+
+    if (slashCount > 3) {
+        console.log("slash filtered: " + sentence);
+        return [];
+    }
+
+    // Assuming this is a legitimate sentence, apply filters
     var toReturn = [];
     for (var i = 0; i < filterLength; i++) {
         if (filterDict[i].exec(sentence) !== null) {
@@ -100,7 +122,9 @@ function DOMtoString(document_root) {
     for(i = 0; i < lines.length; i++){
         var curSentences = lines[i].split(/\.(\s|\"|\')/); // Need a space to not fail on things like "U.S."
         for(j = 0; j < curSentences.length; j++){
-            curSentences[j] = curSentences[j].replace(/([A-Za-z)\"\']\.)([A-Z][a-z\s])/g, "$1 $2"); // Gotta do this repeatedly so /g global flag
+            curSentences[j] = curSentences[j].replace(/([A-Za-z)\"\']\.)([A-Z][a-z\s])/g, "$1 $2"); // Gotta do this repeatedly so /g global flag. Is the space \s at tne end needed??
+            // Compensate for when two words combined like this: BigMistake--just add ". " in between
+            //curSentences[j] = curSentences[j].replace(/([a-z])([A-Z][a-z])/g, "$1. $2"); 
             fineSentences = curSentences[j].split(/\.(\s|\"|\')/);
             for (k = 0; k < fineSentences.length; k++) {
                 var filters = filterSentence(fineSentences[k]);
@@ -120,6 +144,8 @@ function DOMtoString(document_root) {
             }
         }
     }
+    console.log(sentences)
+
     return JSON.stringify(sentences);
 }
 
