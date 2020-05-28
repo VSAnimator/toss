@@ -2,6 +2,12 @@
 
 // helper function to add text to correct subdivision
 function displayText(category, textList){
+  var numChildren = document.getElementById("list " + category).childNodes.length;
+  // Okay so as long as we don't mess with the html format numChildren will be 1 before anything is entered, but even comments will mess this up
+  // TEMPORARY FIX
+  if (numChildren > 1) {
+    return;
+  }
   for(var i = 0; i < textList.length; i++){
     var node = document.createElement("li");
     node.classList.add("info-list-sub"); 

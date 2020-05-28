@@ -68,6 +68,8 @@ function filterSentence(sentence){
     var urlCount = (sentence.match(/Url/g) || []).length; // If encoding Urls in page
     var imgCount = (sentence.match(/img|svg|png/gi) || []).length; // If code embedding images
     var slashCount = (sentence.match(/\//g) || []).length; // If url string(s)
+    var colonCount = (sentence.match(/\:/g) || []).length; // If url string(s)
+    var quoteCount = (sentence.match(/\"/g) || []).length; // If url string(s)
 
     if (urlCount > 0) {
         console.log("URL filtered: " + sentence);
@@ -81,6 +83,16 @@ function filterSentence(sentence){
 
     if (slashCount > 3) {
         console.log("slash filtered: " + sentence);
+        return [];
+    }
+
+    if (colonCount > 3) {
+        console.log("colon filtered: " + sentence);
+        return [];
+    }
+
+    if (quoteCount > 6) {
+        console.log("quote filtered: " + sentence);
         return [];
     }
 
@@ -124,7 +136,7 @@ function DOMtoString(document_root) {
         for(j = 0; j < curSentences.length; j++){
             curSentences[j] = curSentences[j].replace(/([A-Za-z)\"\']\.)([A-Z][a-z\s])/g, "$1 $2"); // Gotta do this repeatedly so /g global flag. Is the space \s at tne end needed??
             // Compensate for when two words combined like this: BigMistake--just add ". " in between
-            //curSentences[j] = curSentences[j].replace(/([a-z])([A-Z][a-z])/g, "$1. $2"); 
+            //curSentences[j] = curSentences[j].replace(/([a-z])([A-Z][a-z])/g, "$1. $2"); // This may not be helping...
             fineSentences = curSentences[j].split(/\.(\s|\"|\')/);
             for (k = 0; k < fineSentences.length; k++) {
                 var filters = filterSentence(fineSentences[k]);
