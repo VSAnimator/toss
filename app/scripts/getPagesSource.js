@@ -100,14 +100,11 @@ function DOMtoString(document_root) {
     for(i = 0; i < lines.length; i++){
         var curSentences = lines[i].split(/\.(\s|\"|\')/); // Need a space to not fail on things like "U.S."
         for(j = 0; j < curSentences.length; j++){
-            console.log(curSentences[j])
-            curSentences[j] = curSentences[j].replace(/([a-z]\.)([A-Z][a-z\s])/g, "$1 $2"); // Gotta do this repeatedly
-            console.log(curSentences[j])
+            curSentences[j] = curSentences[j].replace(/([a-z]\.)([A-Z][a-z\s])/g, "$1 $2"); // Gotta do this repeatedly so /g global flag
             fineSentences = curSentences[j].split(/\.(\s|\"|\')/);
             for (k = 0; k < fineSentences.length; k++) {
                 var filters = filterSentence(fineSentences[k]);
                 if(filters.length > 0){
-                    console.log(fineSentences[k])
                     // store the filters
                     for(f = 0; f < filters.length; f++){
                         var filterFound = filterKeys[filters[f]];
@@ -118,15 +115,11 @@ function DOMtoString(document_root) {
                     }
 
                     // highlighting
-                    // console.log(filters[0]);
-                    // console.log(curSentences[j])
                     highlightText(fineSentences[k], filterKeys[filters[0]]);
                 }
             }
         }
     }
-
-    console.log(sentences)
 
     return JSON.stringify(sentences);
 }
