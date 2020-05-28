@@ -2,7 +2,6 @@
 
 // helper function to add text to correct subdivision
 function displayText(category, textList){
-  console.log(category);
   for(var i = 0; i < textList.length; i++){
     var node = document.createElement("li");             // Create a <li> node
     var textnode = document.createTextNode(textList[i]); // Fill in the text
@@ -24,7 +23,7 @@ chrome.runtime.onMessage.addListener(function(request, sender) {
       displayText(category, results[category]);
     }
 
-    message.innerText = "That all we could find!";
+    message.innerText = "That's all we could find!";
   }
 });
 
@@ -80,7 +79,7 @@ function closeApp() {
 }
 
 function goToHighlighted(id) {
-  console.log("Scrolly-bois");
+  console.log("Scrolly-bois"); // Iconic
 }
 
 // define an onload function: when the page is loaded,

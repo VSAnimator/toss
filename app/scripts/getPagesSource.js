@@ -100,7 +100,7 @@ function DOMtoString(document_root) {
     for(i = 0; i < lines.length; i++){
         var curSentences = lines[i].split(/\.(\s|\"|\')/); // Need a space to not fail on things like "U.S."
         for(j = 0; j < curSentences.length; j++){
-            curSentences[j] = curSentences[j].replace(/([a-z]\.)([A-Z][a-z\s])/g, "$1 $2"); // Gotta do this repeatedly so /g global flag
+            curSentences[j] = curSentences[j].replace(/([A-Za-z)\"\']\.)([A-Z][a-z\s])/g, "$1 $2"); // Gotta do this repeatedly so /g global flag
             fineSentences = curSentences[j].split(/\.(\s|\"|\')/);
             for (k = 0; k < fineSentences.length; k++) {
                 var filters = filterSentence(fineSentences[k]);
