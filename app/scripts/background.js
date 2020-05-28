@@ -5,7 +5,7 @@ chrome.runtime.onInstalled.addListener(function (details) {
 });
 
 // this sets the icon text in the chrome toolbar
-chrome.browserAction.setBadgeText({ text: 'TOSS' });
+//chrome.browserAction.setBadgeText({ text: 'TOSS' });
 
 function sendSummary(info, tab) {
   chrome.tabs.sendMessage(tab.id, {from: 'contextMenu', subject: info});
