@@ -107,13 +107,12 @@ function DOMtoString(document_root) {
                 }
 
                 // highlighting
-                // console.log(filters[0]);
-                // console.log(curSentences[j])
+                // console.log(filterKeys[filters[0]]);
+                // console.log(curSentences[j]);
                 highlightText(curSentences[j], filterKeys[filters[0]]);
             }
         }
     }
-
     return JSON.stringify(sentences);
 }
 

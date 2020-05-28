@@ -4,10 +4,10 @@
 function displayText(category, textList){
   console.log(category);
   for(var i = 0; i < textList.length; i++){
-    var node = document.createElement("li");             // Create a <li> node
-    var textnode = document.createTextNode(textList[i]); // Fill in the text
-    node.appendChild(textnode);                          // Append the text to <li>
-    document.getElementById("list " + category).appendChild(node); 
+    var node = document.createElement("li");
+    node.classList.add("info-list-sub"); 
+    node.textContent = textList[i];                      
+    document.getElementById("list " + category).appendChild(node);
   }
 }
 

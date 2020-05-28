@@ -42,7 +42,6 @@ function checked(category) {
 
   // Get the output text
   //NEEDS TO CHANGE BECAUSE THE TEXT ELEMENT WE'RE CHANGING IS ON A DIFFERENT DOCUMENT
-  window.location.href="popup.html";
   let text = document.getElementById("list " + category);
 
   // If the checkbox is checked, display the output text
@@ -51,6 +50,4 @@ function checked(category) {
   } else {
     text.classList.add("hidden");
   }
-
-  window.location.href="options.html";
 }
