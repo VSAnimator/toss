@@ -19,25 +19,25 @@ mark{
 }
 
 mark.govt {
-    background: blue;
+    background: #677D01;
 }
 
 mark.track {
-    background: yellow;
+    background: #C4E562;
 }
 
 mark.share {
-    background: green;
+    background: #ACE8B5;
 }
 
 mark.sell {
-    background: red;
+    background: #00CFEE;
 }
 
 mark.copyright {
-    background: orange;
+    background: #009BF9;
 }
 
 mark.court {
-    background: purple;
+    background: #38D37F;
 }
