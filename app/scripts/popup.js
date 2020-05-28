@@ -119,6 +119,15 @@ function closeApp() {
 }
 
 function goToHighlighted(id) {
+  // var all = document.getElementsByTagName("*");
+  // var div;
+  // for (var i=0; i<all.length; i++) {
+  //     message.innerText = all[i].textContent;
+  //     if(all[i].innertHTML.includes("Revised: Apr")){
+  //       div = all[i];
+  //     }
+  // }
+  // div.scrollIntoView();
   console.log("Scrolly-bois"); // Iconic
 }
 
