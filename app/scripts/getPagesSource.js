@@ -120,7 +120,6 @@ function DOMtoString(document_root) {
             }
         }
     }
-
     return JSON.stringify(sentences);
 }
 
