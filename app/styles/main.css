@@ -1,9 +1,7 @@
 body {
-  padding: 20px;
   width: 400px;
   height: 460px;
   font-family: 'Lato';
-  background-color: #F3F2EE;
 }
 
 .header {
@@ -106,7 +104,7 @@ button  {
   border-radius: 7px;
   background-clip: padding-box;
   background-color: white;
-  padding: 25px;
+  padding: 12px;
 }
 
 .back {
@@ -120,6 +118,7 @@ button  {
 
 .back-text {
   padding-left: 2%;
+  font-size: 16px;
 }
 
 .check-list {
