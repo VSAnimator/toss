@@ -6,13 +6,18 @@ function containsTOS(text){
 }
 
 // cleans up the text by removing bad characters and lines that are mostly code
+// Maybe split on <div> and <br>
 function processText(text){
     text = text.replace(/[^a-z\n\s.,?!-:;\"\']/gi, ' ');
+    //text = text.replace(/([a-z]\.)([A-Z][a-z])/, "$1 $2");
     var lines = text.split(/\n\r/);
+    // var lines = text.split(/<div.*>|<\/div>|<br.*>|<\/br>|\n|\r/);
     var newText = "";
     for(i = 0; i < lines.length; i++){
+        //lines[i] = lines[i].replace(/[^a-z\n\s.,?!-:;\"\']/gi, ' ');
+        //sublines = lines[i].split(/[^a-z\n\s.,?!-:;\"\']/gi);
         if(lines[i].split(" ").length > 0){ // Try to make sure 20 words in line?? Why? Alex prob saw something when writing this. Add a condition to make sure total length of line < 200? No lines seem too long (will put in diff part)
-            newText +=  " " + lines[i];
+            newText +=  ". " + lines[i];
         }
     }
     return newText;
@@ -95,21 +100,23 @@ function DOMtoString(document_root) {
     for(i = 0; i < lines.length; i++){
         var curSentences = lines[i].split(/\.(\s|\"|\')/); // Need a space to not fail on things like "U.S."
         for(j = 0; j < curSentences.length; j++){
-            var filters = filterSentence(curSentences[j]);
-            if(filters.length > 0){
-                // store the filters
-                for(f = 0; f < filters.length; f++){
-                    var filterFound = filterKeys[filters[f]];
-                    if(!(filterFound in sentences)){
-                        sentences[filterFound] = [];
+            curSentences[j] = curSentences[j].replace(/([a-z]\.)([A-Z][a-z\s])/g, "$1 $2"); // Gotta do this repeatedly so /g global flag
+            fineSentences = curSentences[j].split(/\.(\s|\"|\')/);
+            for (k = 0; k < fineSentences.length; k++) {
+                var filters = filterSentence(fineSentences[k]);
+                if(filters.length > 0){
+                    // store the filters
+                    for(f = 0; f < filters.length; f++){
+                        var filterFound = filterKeys[filters[f]];
+                        if(!(filterFound in sentences)){
+                            sentences[filterFound] = [];
+                        }
+                        sentences[filterFound].push(fineSentences[k]);
                     }
-                    sentences[filterFound].push(curSentences[j]);
-                }
 
-                // highlighting
-                // console.log(filterKeys[filters[0]]);
-                // console.log(curSentences[j]);
-                highlightText(curSentences[j], filterKeys[filters[0]]);
+                    // highlighting
+                    highlightText(fineSentences[k], filterKeys[filters[0]]);
+                }
             }
         }
     }
