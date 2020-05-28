@@ -68,16 +68,50 @@ document.addEventListener('DOMContentLoaded', function () {
     var closeButton = document.getElementById("close button");
     closeButton.addEventListener('click', closeApp);
 
+    // close button (settings page)
+    var closeButton = document.getElementById("close button settings");
+    closeButton.addEventListener('click', closeApp);
+
+    // back button (settings page only)
+    var settingsButton = document.getElementById("back button");
+    settingsButton.addEventListener('click', backToMain);
+
     for(var i = 0; i < filterKeys.length; i++){
       var category = filterKeys[i];
+      
+      // scroll to highlight
       var categoryButton = document.getElementById(category + " button");
       categoryButton.addEventListener('click', 
         () => { goToHighlighted(category); });
+
+      // checkboxes
+      var categoryCheckbox = document.getElementById(category + " checkbox");
+      categoryCheckbox.addEventListener('change', 
+        function() { 
+          var category = this.id.split(" ")[0];
+          if(this.checked) {
+            document.getElementById(category).classList.remove("hidden");
+          } else {
+            document.getElementById(category).classList.add("hidden");
+          } 
+        });
     }
 });
 
 function goToSettings() {
-  window.location.href="options.html";
+  var settingsDiv = document.getElementById("settings box");
+  settingsDiv.classList.remove("hidden");
+
+  var mainDiv = document.getElementById("box");
+  mainDiv.classList.add("hidden");
+}
+
+function backToMain() {
+  var settingsDiv = document.getElementById("settings box");
+  settingsDiv.classList.add("hidden");
+
+  var mainDiv = document.getElementById("box");
+  mainDiv.classList.remove("hidden");
 }
 
 function closeApp() {
