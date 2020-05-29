@@ -1,9 +1,7 @@
 body {
-  padding: 20px;
   width: 400px;
   height: 460px;
   font-family: 'Lato';
-  background-color: #F3F2EE;
 }
 
 .header {
@@ -11,6 +9,12 @@ body {
   padding-bottom: 17px;
   display: flex;
   flex-direction: row;
+}
+
+.logo {
+  width: 22px;
+  height: 22px;
+  margin-right: 13px;
 }
 
 .header-text {
@@ -23,7 +27,7 @@ body {
 }
 
 .setting {
-  margin-left: 27%;
+  margin-left: 17%;
 }
 
 .close {
@@ -76,6 +80,7 @@ body {
   display: inline-block;
   color: #38D37F;
   font-size: 14px;
+  margin-left: 5%;
 }
 
 li {
@@ -116,10 +121,17 @@ button  {
   color: #B9B9B9;
   padding-top: 4%;
   padding-bottom: 2%;
+  width: 37%;
+}
+
+.back:hover {
+  cursor: pointer;
+  color: #38D37F !important;
 }
 
 .back-text {
   padding-left: 2%;
+  font-size: 16px;
 }
 
 .check-list {
