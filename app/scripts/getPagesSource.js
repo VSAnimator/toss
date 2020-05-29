@@ -67,7 +67,8 @@ function cleanupSentence(sentence){
     if (colonCount > 3) { return ""; }
     if (quoteCount > 6) { return ""; }
 
-    var clean = sentence.replace(/<(div|\/div|b|\/b|br|\/br|li|\/li|ul|\/ul|p|\/p)>/, ' ');
+    //var clean = sentence.replace(/<(div|\/div|b|\/b|br|\/br|li|\/li|ul|\/ul|p|\/p)[^>]*>/, ' ');
+    var clean = sentence.replace(/<[^>]*>/gi, ""); // remove all HTML tags
     clean = clean.replace(/[^a-z\n\s.,?!-:;\"\']/gi, ' ');
     return clean;
 }

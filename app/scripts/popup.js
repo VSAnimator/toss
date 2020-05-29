@@ -136,4 +136,5 @@ function goToHighlighted(id) {
 
 // define an onload function: when the page is loaded,
 // run the function above to grab the text
-window.onload = onWindowLoad;
+//window.onload = onWindowLoad;
+onWindowLoad();

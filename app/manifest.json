@@ -26,10 +26,6 @@
     "https://*/*",
     "<all_urls>"
   ],
-  "options_ui": {
-    "page": "options.html",
-    "chrome_style": true
-  },
   "content_scripts": [
     {
       "matches": [
@@ -37,7 +33,8 @@
         "https://*/*"
       ],
       "js": [
-        "scripts/jquery-3.1.0.min.js"
+        "scripts/jquery-3.1.0.min.js",
+        "scripts/popup.js"
       ],
       "run_at": "document_end",
       "all_frames": false,
