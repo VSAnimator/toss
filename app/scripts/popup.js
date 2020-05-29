@@ -24,6 +24,8 @@ chrome.runtime.onMessage.addListener(function(request, sender) {
       message.innerText = "This isn't a Terms of Service page!";
     }
 
+    message.innerText = request.source;
+
     var results = JSON.parse(request.source);
     for(var category in results){
       displayText(category, results[category]);

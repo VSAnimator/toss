@@ -5,28 +5,7 @@ function containsTOS(text){
     return (text.search("Terms of Use") != -1) || (text.search("Terms of Service") != -1);
 }
 
-// cleans up the text by removing bad characters and lines that are mostly code
-// Maybe split on <div> and <br>
-function processText(text){
-    text = text.replace(/[^a-z\n\s.,?!-:;\"\']/gi, ' ');
-    //text = text.replace(/([a-z]\.)([A-Z][a-z])/, "$1 $2");
-    var lines = text.split(/\n\r/);
-    // var lines = text.split(/<div.*>|<\/div>|<br.*>|<\/br>|\n|\r/);
-    var newText = "";
-    for(i = 0; i < lines.length; i++){
-        //lines[i] = lines[i].replace(/[^a-z\n\s.,?!-:;\"\']/gi, ' ');
-        //sublines = lines[i].split(/[^a-z\n\s.,?!-:;\"\']/gi);
-        if(lines[i].split(" ").length > 0){ // Try to make sure 20 words in line?? Why? Alex prob saw something when writing this. Add a condition to make sure total length of line < 200? No lines seem too long (will put in diff part)
-            newText +=  ". " + lines[i];
-        }
-    }
-    return newText;
-}
-
 // highlight the given text of a different color for each category
-// KNOWN ISSUES:
-// ---> when we have hyperlinks, string doesn't get found
-// ---> in a bullet list, the segement to highlight might span a transition, which causes an issue
 function highlightText(wordQuery, category){
 
     var instance = new Mark(document.querySelector("div"));
@@ -59,43 +38,6 @@ var filterLength = filterDict.length;
 
 // iterate through the filter to see if a sentence is interesting
 function filterSentence(sentence){
-    // Add some checks here
-    if (sentence.length > 1000) {
-        return [];
-    }
-
-    // Let's identify some strings that indicate parsing has messed up
-    var urlCount = (sentence.match(/Url/g) || []).length; // If encoding Urls in page
-    var imgCount = (sentence.match(/img|svg|png/gi) || []).length; // If code embedding images
-    var slashCount = (sentence.match(/\//g) || []).length; // If url string(s)
-    var colonCount = (sentence.match(/\:/g) || []).length; // If url string(s)
-    var quoteCount = (sentence.match(/\"/g) || []).length; // If url string(s)
-
-    if (urlCount > 0) {
-        console.log("URL filtered: " + sentence);
-        return [];
-    }
-
-    if (imgCount > 0) {
-        console.log("img filtered: " + sentence);
-        return [];
-    }
-
-    if (slashCount > 3) {
-        console.log("slash filtered: " + sentence);
-        return [];
-    }
-
-    if (colonCount > 3) {
-        console.log("colon filtered: " + sentence);
-        return [];
-    }
-
-    if (quoteCount > 6) {
-        console.log("quote filtered: " + sentence);
-        return [];
-    }
-
     // Assuming this is a legitimate sentence, apply filters
     var toReturn = [];
     for (var i = 0; i < filterLength; i++) {
@@ -106,59 +48,110 @@ function filterSentence(sentence){
     return toReturn;
 }
 
+// clean the sentence by removing extra characters + leftover html tags.
+function cleanupSentence(sentence){
+    if (sentence.length > 1000) {
+        return "";
+    }
+
+    // Let's identify some strings that indicate parsing has messed up
+    var urlCount = (sentence.match(/Url/g) || []).length; // If encoding Urls in page
+    var imgCount = (sentence.match(/img|svg|png/gi) || []).length; // If code embedding images
+    var slashCount = (sentence.match(/\//g) || []).length; // If url string(s)
+    var colonCount = (sentence.match(/\:/g) || []).length; // If url string(s)
+    var quoteCount = (sentence.match(/\"/g) || []).length; // If url string(s)
+
+    if (urlCount > 0) { return ""; }
+    if (imgCount > 0) { return ""; }
+    if (slashCount > 3) { return ""; }
+    if (colonCount > 3) { return ""; }
+    if (quoteCount > 6) { return ""; }
+
+    var clean = sentence.replace(/<(div|\/div|b|\/b|br|\/br|li|\/li|ul|\/ul|p|\/p)>/, ' ');
+    clean = clean.replace(/[^a-z\n\s.,?!-:;\"\']/gi, ' ');
+    return clean;
+}
+
+// this function breaks the text into sentences base on both period and html tags.
+function breakIntoSentences(text){
+    var finalSentences = [];
+
+    var firstIteration = text.split(/\.(\s|\"|\'|\))/);
+
+    for(var k = 0; k < firstIteration.length; k++){
+        var secondIteration = firstIteration[k].split(/(<b>|<br>|<div>|<li>|<ul>)/);
+        for(var l = 0; l < secondIteration.length; l++){
+            finalSentences.push(secondIteration[l]);
+        }
+    }
+
+    return finalSentences;
+}
+
 // convert the document to plain text
-function DOMtoString(document_root) {    
+function DOMtoString(document_root) {
     // 1. Grab all the text from the page
-    var pageText = '',
-        node = document_root.firstChild;
+    var acceptedTags = ["A", "UL", "LI", "BR", "B", "P"];
+    var all = document.getElementsByTagName("*");
+    var pageText = '';
     var isTOS = false;
 
-    while (node) {
-        var newString = '';
-        if ((node.nodeType == Node.ELEMENT_NODE) || (node.nodeType == Node.TEXT_NODE)) {
-            if(!isTOS && containsTOS(node.textContent)){ isTOS = true; }
-            pageText += processText(node.textContent) + " ";
-        }
-        node = node.nextSibling;
-    }
+    // three maps:
+    var keptSentences = {}; // categories -> list of cleaned sentences (for display)
+    var cleanToRaw = {}; // cleaned sentence -> raw sentence (for highlighting)
+    var keptIDs = {}; // categories -> list of elementIDs (for scroll)
 
+    // iterate over all elements
+    for (var i=0; i < all.length; i++) {
+        var curElem = all[i];
+        pageText += curElem.tagName + "\n";
 
-    // 2. very basic test to see if we are on a TOS or not
-    if(!isTOS){ // TODO: this also picks up footers...
-        return null;
-    }
+        // look only at valid tags
+        if(acceptedTags.indexOf(curElem.tagName) > -1){
+            pageText += "\n" + curElem.innerHTML + "\n";
+            var text = curElem.innerHTML;
 
-    // 3. Use "Regex" to find the appropriate sentences
-    var sentences = {} // initalize a dict storing what sentence belong to what clause
-    var lines = pageText.split("\n");
-    for(i = 0; i < lines.length; i++){
-        var curSentences = lines[i].split(/\.(\s|\"|\')/); // Need a space to not fail on things like "U.S."
-        for(j = 0; j < curSentences.length; j++){
-            curSentences[j] = curSentences[j].replace(/([A-Za-z)\"\']\.)([A-Z][a-z\s])/g, "$1 $2"); // Gotta do this repeatedly so /g global flag. Is the space \s at tne end needed??
-            // Compensate for when two words combined like this: BigMistake--just add ". " in between
-            //curSentences[j] = curSentences[j].replace(/([a-z])([A-Z][a-z])/g, "$1. $2"); // This may not be helping...
-            fineSentences = curSentences[j].split(/\.(\s|\"|\')/);
-            for (k = 0; k < fineSentences.length; k++) {
-                var filters = filterSentence(fineSentences[k]);
-                if(filters.length > 0){
-                    // store the filters
+            // basic TOS check
+            if(!isTOS && containsTOS(text)){ isTOS = true; }
+
+            // split sentences
+            var curSentences = breakIntoSentences(text);
+
+            // pass sentences through a cleanup + filters
+            for(var j = 0; j < curSentences.length; j++){
+                var cleanSentence = cleanupSentence(curSentences[j]);
+
+                var filters = filterSentence(cleanSentence);
+                if(filters.length > 0 && !(cleanSentence in cleanToRaw)){
+                    cleanToRaw[cleanSentence] = curSentences[j];
+                    
+                    // add to our maps
                     for(f = 0; f < filters.length; f++){
                         var filterFound = filterKeys[filters[f]];
-                        if(!(filterFound in sentences)){
-                            sentences[filterFound] = [];
+                        if(!(filterFound in keptSentences)){
+                            keptSentences[filterFound] = [];
+                            keptIDs[filterFound] = [];
                         }
-                        sentences[filterFound].push(fineSentences[k]);
-                    }
-
-                    // highlighting
-                    highlightText(fineSentences[k], filterKeys[filters[0]]);
+                        keptSentences[filterFound].push(cleanSentence);
+                        keptIDs[filterFound].push(curElem.id);
+                    }          
                 }
+
             }
         }
     }
-    console.log(sentences)
 
-    return JSON.stringify(sentences);
+    if(!isTOS) { return null; }
+
+    // highlighting
+    for(var category in keptSentences){
+        var categoryCleanSentences = keptSentences[category];
+        for(var i = 0; i < categoryCleanSentences.length; i++){
+            var cleanSentence = categoryCleanSentences[i];
+            highlightText(cleanToRaw[cleanSentence], category);
+        }
+    }
+    return JSON.stringify(keptSentences);
 }
 
 // send a message back to popup.js (calls the Listener there)
