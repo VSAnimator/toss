@@ -8,7 +8,7 @@ function containsTOS(text){
 // highlight the given text of a different color for each category
 function highlightText(wordQuery, category){
 
-    var instance = new Mark(document.querySelector("div"));
+    var instance = new Mark(document.querySelector("*"));
     var options = {"separateWordSearch": false, "className": category};
     instance.mark(wordQuery, options);
 }

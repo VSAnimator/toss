@@ -55,12 +55,14 @@ chrome.runtime.onMessage.addListener(function(request, sender) {
     }
 
     var results = JSON.parse(request.source);
-    for(var category in results["sentences"]){
-      displayText(category, results);
-    }
 
     // store the results
     searchResults = results;
+
+    // display results
+    for(var category in results["sentences"]){
+      displayText(category, results);
+    }
 
     message.innerText = "That's all we could find!";
   }
