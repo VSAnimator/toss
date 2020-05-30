@@ -1,7 +1,11 @@
 'use strict';
 
+// global variable to store search results
+var searchResults = null;
+var buttonStyle = "font-size:24px;color:#B9B9B9;"
+
 // helper function to add text to correct subdivision
-function displayText(category, textList){
+function displayText(category, resultDict){
   var numChildren = document.getElementById("list " + category).childNodes.length;
   // Okay so as long as we don't mess with the html format numChildren will be 1 before anything is entered, but even comments will mess this up
   // TEMPORARY FIX
@@ -9,13 +13,36 @@ function displayText(category, textList){
   if (numChildren > 1) {
     return;
   }
+
+  var textList = resultDict["sentences"][category];
+  var idList = resultDict["ids"][category]; // try to use id for scrolling: usually empty :/
+  var categoryList = document.getElementById("list " + category);
+
   console.log(textList)
   for(var i = 0; i < textList.length; i++){
+    // text
     var node = document.createElement("li");
+    node.id = category + " element " + i;
     node.classList.add("info-list-sub"); 
     node.textContent = textList[i];                      
-    document.getElementById("list " + category).appendChild(node);
-    console.log(textList[i])
+    categoryList.appendChild(node);
+
+    // button
+    var buttonDiv = document.createElement("div");
+    buttonDiv.id = category + " button " + i;
+    buttonDiv.classList.add("arrow\sbutton");
+
+    var buttonI = document.createElement("i");
+    buttonI.classList.add("material-icons");
+    buttonI.style = buttonStyle;
+    buttonI.textContent = "arrow_forward";
+
+    buttonDiv.appendChild(buttonI);
+    categoryList.appendChild(buttonDiv);
+
+    // button listener
+    buttonDiv.addEventListener('click', 
+      function() { goToHighlighted(this.id); });
   }
 }
 
@@ -28,9 +55,12 @@ chrome.runtime.onMessage.addListener(function(request, sender) {
     }
 
     var results = JSON.parse(request.source);
-    for(var category in results){
-      displayText(category, results[category]);
+    for(var category in results["sentences"]){
+      displayText(category, results);
     }
+
+    // store the results
+    searchResults = results;
 
     message.innerText = "That's all we could find!";
   }
@@ -82,11 +112,6 @@ document.addEventListener('DOMContentLoaded', function () {
     for(var i = 0; i < filterKeys.length; i++){
       var category = filterKeys[i];
       
-      // scroll to highlight
-      var categoryButton = document.getElementById(category + " button");
-      categoryButton.addEventListener('click', 
-        () => { goToHighlighted(category); });
-
       // checkboxes
       var categoryCheckbox = document.getElementById(category + " checkbox");
       categoryCheckbox.addEventListener('change', 
@@ -122,16 +147,24 @@ function closeApp() {
 }
 
 function goToHighlighted(id) {
-  // var all = document.getElementsByTagName("*");
-  // var div;
-  // for (var i=0; i<all.length; i++) {
-  //     message.innerText = all[i].textContent;
-  //     if(all[i].innertHTML.includes("Revised: Apr")){
-  //       div = all[i];
-  //     }
-  // }
-  // div.scrollIntoView();
-  console.log("Scrolly-bois"); // Iconic
+
+  var category = id.split(" ")[0];
+  var index = id.split(" ")[2];
+
+  var sentenceID = category + " element " + index;
+  var cleanSentence = document.getElementById(sentenceID).innerHTML;
+  var rawSentence = searchResults["cleanToRaw"][cleanSentence];
+
+  var params = {"sentence" : rawSentence, "category" : category};
+
+  chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+    chrome.tabs.sendMessage(
+      tabs[0].id, 
+      {action: "scroll", source: JSON.stringify(params)}
+      );
+  });
+
+  return;
 }
 
 // define an onload function: when the page is loaded,

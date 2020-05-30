@@ -13,7 +13,6 @@
   "background": {
     "scripts": [
       "scripts/jquery-3.1.0.min.js",
-      "scripts/mark.min.js",
       "scripts/chromereload.js",
       "scripts/background.js"
     ]
@@ -33,7 +32,8 @@
         "https://*/*"
       ],
       "js": [
-        "scripts/jquery-3.1.0.min.js"
+        "scripts/jquery-3.1.0.min.js",
+        "scripts/mark.min.js"
       ],
       "run_at": "document_end",
       "all_frames": false,

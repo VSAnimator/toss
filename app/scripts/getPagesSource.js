@@ -134,7 +134,7 @@ function DOMtoString(document_root) {
                             keptIDs[filterFound] = [];
                         }
                         keptSentences[filterFound].push(cleanSentence);
-                        keptIDs[filterFound].push(curElem.id);
+                        keptIDs[filterFound].push(curElem.className);
                     }          
                 }
 
@@ -152,8 +152,32 @@ function DOMtoString(document_root) {
             highlightText(cleanToRaw[cleanSentence], category);
         }
     }
-    return JSON.stringify(keptSentences);
+    return JSON.stringify({
+        "sentences": keptSentences,
+         "ids": keptIDs,
+         "cleanToRaw": cleanToRaw
+     });
 }
+
+chrome.runtime.onMessage.addListener(function(request, sender) {
+  if (request.action == "scroll") {
+
+    var scrollParams = JSON.parse(request.source);
+    var sentence = scrollParams["sentence"];
+    var category = scrollParams["category"];
+
+    var all = document.getElementsByClassName(category);
+
+    var div = "NONE";
+    for (var i = 0; i < all.length; i++) {
+      if(all[i].innerHTML.includes(sentence)){
+        div = all[i];
+        div.scrollIntoView({block: "center"});
+        break;
+      }
+    }
+  }
+});
 
 // send a message back to popup.js (calls the Listener there)
 chrome.runtime.sendMessage({
