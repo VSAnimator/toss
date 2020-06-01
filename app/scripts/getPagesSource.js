@@ -83,8 +83,12 @@ function cleanupSentence(sentence){
     var clean = sentence.replace(/<[^>]*>/gi, ""); // remove all HTML tags
     clean = clean.replace(/[^a-z\n\s.,?!-:;\"\']/gi, ' ');
     clean = clean.replace(/&.t;/g, '');
+    clean = clean.replace('&nbsp;', '');
     clean = clean.replace('a href', '');
     clean = clean.replace('/p ', '');
+    clean = clean.replace('/a ', '');
+    // Replace alternating unquoted and quoted words...
+    clean = clean.replace(/([a-zA-Z-]* "[a-zA-Z- #]*".){2,}/gm, ' ')
 
     if (clean.split(" ").length < 10) { return ""; } // get rid of short ones (likely headers)
 
