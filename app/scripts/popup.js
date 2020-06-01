@@ -22,12 +22,12 @@ function displayText(category, resultDict){
   for(var i = 0; i < textList.length; i++){
     // list node
     var node = document.createElement("li");
-    node.id = category + " element " + i;
     node.classList.add("info-list-elem");
 
     //text
     var text = document.createElement("div");
     text.classList.add("info-list-sub");
+    text.id = category + " element " + i;
     text.textContent = textList[i];
 
     // button
@@ -161,6 +161,19 @@ function goToHighlighted(id) {
   var sentenceID = category + " element " + index;
   var cleanSentence = document.getElementById(sentenceID).innerHTML;
   var rawSentence = searchResults["cleanToRaw"][cleanSentence];
+
+  var splitRaw = rawSentence.split(/<[^>]*>/);
+  if(splitRaw.length > 1){
+    rawSentence = splitRaw[0];
+    var i = 0;
+    while(rawSentence.length < 10){
+      i = i + 1;
+      if(i == splitRaw.length) {return;}
+      rawSentence = splitRaw[i]
+    }
+  }
+
+  message.innerText = rawSentence;
 
   var params = {"sentence" : rawSentence, "category" : category};
 

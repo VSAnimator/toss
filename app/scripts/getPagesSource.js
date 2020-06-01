@@ -9,7 +9,18 @@ function containsTOS(text){
 function highlightText(wordQuery, category){
 
     var instance = new Mark(document.querySelector("*"));
-    var options = {"separateWordSearch": false, "className": category};
+    var options = {
+        "separateWordSearch": false,
+        "className": category,
+        "noMatch": function(term){
+        // term is the not found term
+        var split = term.split(/<[^>]*>/);
+        for(var j = 0; j < split.length; j++){
+            if(split[j].split(" ").length < 10){continue;}
+            instance.mark(split[j], {"separateWordSearch": false, "className": category});
+        }
+    },
+    };
     instance.mark(wordQuery, options);
 }
 
@@ -42,6 +53,7 @@ function filterSentence(sentence){
     var toReturn = [];
     for (var i = 0; i < filterLength; i++) {
         if (filterDict[i].exec(sentence) !== null) {
+        // if (sentence.search(filterDict[i]) > -1) {
             toReturn.push(i);
         }
     }
@@ -50,9 +62,7 @@ function filterSentence(sentence){
 
 // clean the sentence by removing extra characters + leftover html tags.
 function cleanupSentence(sentence){
-    if (sentence.length > 1000) {
-        return "";
-    }
+    if (sentence.length > 1000) { return ""; } // get rid of long ones (likely code)
 
     // Let's identify some strings that indicate parsing has messed up
     var urlCount = (sentence.match(/Url/g) || []).length; // If encoding Urls in page
@@ -61,15 +71,18 @@ function cleanupSentence(sentence){
     var colonCount = (sentence.match(/\:/g) || []).length; // If url string(s)
     var quoteCount = (sentence.match(/\"/g) || []).length; // If url string(s)
 
-    if (urlCount > 0) { return ""; }
-    if (imgCount > 0) { return ""; }
-    if (slashCount > 3) { return ""; }
-    if (colonCount > 3) { return ""; }
-    if (quoteCount > 6) { return ""; }
+    // if (urlCount > 0) { return ""; }
+    // if (imgCount > 0) { return ""; }
+    // if (slashCount > 3) { return ""; }
+    // if (colonCount > 3) { return ""; }
+    // if (quoteCount > 6) { return ""; }
 
     //var clean = sentence.replace(/<(div|\/div|b|\/b|br|\/br|li|\/li|ul|\/ul|p|\/p)[^>]*>/, ' ');
     var clean = sentence.replace(/<[^>]*>/gi, ""); // remove all HTML tags
     clean = clean.replace(/[^a-z\n\s.,?!-:;\"\']/gi, ' ');
+
+    if (clean.split(" ").length < 10) { return ""; } // get rid of short ones (likely headers)
+
     return clean;
 }
 
@@ -77,7 +90,7 @@ function cleanupSentence(sentence){
 function breakIntoSentences(text){
     var finalSentences = [];
 
-    var firstIteration = text.split(/\.(\s|\"|\'|\))/);
+    var firstIteration = text.split(/[A-Za-z]\.(\s|\"|\'|\|![A-Za-z0-9])/);
 
     for(var k = 0; k < firstIteration.length; k++){
         var secondIteration = firstIteration[k].split(/(<b>|<br>|<div>|<li>|<ul>)/);
@@ -120,6 +133,7 @@ function DOMtoString(document_root) {
 
             // pass sentences through a cleanup + filters
             for(var j = 0; j < curSentences.length; j++){
+
                 var cleanSentence = cleanupSentence(curSentences[j]);
 
                 var filters = filterSentence(cleanSentence);
