@@ -65,11 +65,13 @@ function cleanupSentence(sentence){
     if (sentence.length > 1000) { return ""; } // get rid of long ones (likely code)
 
     // Let's identify some strings that indicate parsing has messed up
+    /*
     var urlCount = (sentence.match(/Url/g) || []).length; // If encoding Urls in page
     var imgCount = (sentence.match(/img|svg|png/gi) || []).length; // If code embedding images
     var slashCount = (sentence.match(/\//g) || []).length; // If url string(s)
     var colonCount = (sentence.match(/\:/g) || []).length; // If url string(s)
     var quoteCount = (sentence.match(/\"/g) || []).length; // If url string(s)
+    */
 
     // if (urlCount > 0) { return ""; }
     // if (imgCount > 0) { return ""; }
@@ -80,6 +82,13 @@ function cleanupSentence(sentence){
     //var clean = sentence.replace(/<(div|\/div|b|\/b|br|\/br|li|\/li|ul|\/ul|p|\/p)[^>]*>/, ' ');
     var clean = sentence.replace(/<[^>]*>/gi, ""); // remove all HTML tags
     clean = clean.replace(/[^a-z\n\s.,?!-:;\"\']/gi, ' ');
+    clean = clean.replace(/&.t;/g, '');
+    clean = clean.replace('&nbsp;', '');
+    clean = clean.replace('a href', '');
+    clean = clean.replace('/p ', '');
+    clean = clean.replace('/a ', '');
+    // Replace alternating unquoted and quoted words...
+    clean = clean.replace(/([a-zA-Z-]* "[a-zA-Z- #]*".){2,}/gm, ' ')
 
     if (clean.split(" ").length < 10) { return ""; } // get rid of short ones (likely headers)
 
@@ -136,6 +145,7 @@ function DOMtoString(document_root) {
 
                 var cleanSentence = cleanupSentence(curSentences[j]);
 
+                console.log(cleanSentence)
                 var filters = filterSentence(cleanSentence);
                 if(filters.length > 0 && !(cleanSentence in cleanToRaw)){
                     cleanToRaw[cleanSentence] = curSentences[j];
