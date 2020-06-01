@@ -91,7 +91,7 @@ body {
 
 .info-list-sub {
   display: inline-block;
-  color: #38D37F;
+  color: black;
   font-size: 14px;
   margin-left: 5%;
 }
@@ -151,4 +151,28 @@ button  {
   margin-block-start: 5px;
   list-style-type: none;
   padding-inline-start: 28px;
+}
+
+.govt {
+  color: #38D37F;
+}
+
+.track {
+  color: #75CDD2;
+}
+
+.share {
+  color: #89AAE6;
+}
+
+.sell {
+  color: #D89BC7;
+}
+
+.copyright {
+  color: #AF62BB;
+}
+
+.court {
+  color: #468EB9;
 }
