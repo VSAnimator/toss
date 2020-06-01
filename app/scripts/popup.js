@@ -20,25 +20,30 @@ function displayText(category, resultDict){
 
   console.log(textList)
   for(var i = 0; i < textList.length; i++){
-    // text
+    // list node
     var node = document.createElement("li");
     node.id = category + " element " + i;
-    node.classList.add("info-list-sub"); 
-    node.textContent = textList[i];                      
-    categoryList.appendChild(node);
+    node.classList.add("info-list-elem");
+
+    //text
+    var text = document.createElement("div");
+    text.classList.add("info-list-sub");
+    text.textContent = textList[i];
 
     // button
     var buttonDiv = document.createElement("div");
     buttonDiv.id = category + " button " + i;
     buttonDiv.classList.add("arrow\sbutton");
-
     var buttonI = document.createElement("i");
     buttonI.classList.add("material-icons");
     buttonI.style = buttonStyle;
     buttonI.textContent = "arrow_forward";
 
+    //appending
+    node.appendChild(text);
     buttonDiv.appendChild(buttonI);
-    categoryList.appendChild(buttonDiv);
+    node.appendChild(buttonDiv);
+    categoryList.appendChild(node);
 
     // button listener
     buttonDiv.addEventListener('click', 

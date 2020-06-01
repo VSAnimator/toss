@@ -54,9 +54,6 @@ body {
 }
 
 .info {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
   margin-top: 15px;
   margin-bottom: 20px;
 }
@@ -72,8 +69,24 @@ body {
   padding-inline-start: 54px;
 }
 
+.info-list-elem {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
 .data {
   padding-inline-start: 0px;
+}
+
+.arrowsbutton {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.arrowsbutton:hover {
+  cursor: pointer;
 }
 
 .info-list-sub {
