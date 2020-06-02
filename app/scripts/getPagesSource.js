@@ -39,7 +39,7 @@ var filterKeys = [
 var filterDict = [
     /government request|(disclose.*legal|legal.*disclose)|subpoena|lawful interception|release/gmi, // (?=.*\bjack\b)(?=.*\bjames\b).* maybe use this lookaround syntax for disclose and legal, but it's slow!
     /DNT| track |(record.*plugin|plugin.*record)/gmi,
-    /(shar.*(part|aggregate|anonymize))|((part|aggregate|anonymize).*shar)/gmi, // Lookaround version: /(?=.*shar.*)(?=.*(part|aggregate|anonymize).*)/gmi,
+    /(shar.*(part|aggregate|anonymize|other))|((part|aggregate|anonymize|other).*shar)/gmi, // Lookaround version: /(?=.*shar.*)(?=.*(part|aggregate|anonymize).*)/gmi,
     /((info|data|affiliate).*(merge|sale|sell|acqui|bankrupt|insolven|transfer))|((merge|sale|sell|acqui|bankrupt|insolven|transfer).*(info|data|affiliate))/gmi, // Lookaround version: 
     /((stuff|content|submission|property).*(rights|license|property|copyright|reproduce|distribute|modify|owner))|((rights|license|property|copyright|reproduce|distribute|modify|owner).*(stuff|content|submission|property))/gmi,
     /((waive|agree).*(court|arbitration|dispute|injuncti))|((court|arbitration|dispute|injuncti).*(waive|agree))/gmi
