@@ -38,7 +38,7 @@ var filterKeys = [
 // Lookarounds are more concise, but slower for some of these, so avoiding using them for now
 var filterDict = [
     /government request|(disclose.*legal|legal.*disclose)|subpoena|lawful interception|release/gmi, // (?=.*\bjack\b)(?=.*\bjames\b).* maybe use this lookaround syntax for disclose and legal, but it's slow!
-    /DNT|track|(record.*plugin|plugin.*record)/gmi,
+    /DNT| track |(record.*plugin|plugin.*record)/gmi,
     /(shar.*(part|aggregate|anonymize))|((part|aggregate|anonymize).*shar)/gmi, // Lookaround version: /(?=.*shar.*)(?=.*(part|aggregate|anonymize).*)/gmi,
     /((info|data|TOS|terms).*(merge|sale|sell|acqui|bankrupt|business|insolven|transfer))|((merge|sale|sell|acqui|bankrupt|business|insolven|transfer).*(info|data|TOS|terms))/gmi, // Lookaround version: 
     /((stuff|content|submission|property).*(rights|license|property|copyright|reproduce|distribute|modify|owner))|((rights|license|property|copyright|reproduce|distribute|modify|owner).*(stuff|content|submission|property))/gmi,
@@ -134,7 +134,7 @@ function DOMtoString(document_root) {
     var acceptedTags = ["A", "UL", "LI", "BR", "B", "P"];
     var all = document.getElementsByTagName("*");
     var pageText = '';
-    var isTOS = false;
+    var numSentences = 0;
 
     // three maps:
     var keptSentences = {}; // categories -> list of cleaned sentences (for display)
@@ -153,7 +153,7 @@ function DOMtoString(document_root) {
             var text = curElem.innerHTML;
 
             // basic TOS check
-            if(!isTOS && containsTOS(text)){ isTOS = true; }
+            // if(!isTOS && containsTOS(text)){ isTOS = true; }
 
             // split sentences
             var curSentences = breakIntoSentences(text);
@@ -168,7 +168,7 @@ function DOMtoString(document_root) {
                 if(filters.length > 0 && !(cleanSentence in cleanToRaw)){
                     cleanToRaw[cleanSentence] = curSentences[j];
                     
-                    console.log(cleanSentence);
+                    // console.log(cleanSentence);
                     // add to our maps
                     for(f = 0; f < filters.length; f++){
                         var filterFound = filterKeys[filters[f]];
@@ -182,6 +182,7 @@ function DOMtoString(document_root) {
                             hashes[filterFound].push(thisHash);
                             keptSentences[filterFound].push(cleanSentence);
                             keptIDs[filterFound].push(curElem.className);
+                            numSentences += 1;
                         }
                     }          
                 }
@@ -190,8 +191,9 @@ function DOMtoString(document_root) {
         }
     }
 
-    console.log(keptSentences);
-    if(!isTOS) { return null; }
+    //console.log(keptSentences);
+    //console.log(numSentences);
+    if(numSentences < 4) { return null; } // Mess with this threshold but i think it's a better method
 
     // highlighting
     for(var category in keptSentences){
