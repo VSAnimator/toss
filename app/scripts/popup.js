@@ -4,6 +4,11 @@
 var searchResults = null;
 var buttonStyle = "font-size:24px;color:#B9B9B9;"
 
+/*
+function isHidden(el) {
+  return (el.offsetParent === null)
+}*/
+
 // helper function to add text to correct subdivision
 function displayText(category, resultDict){
   var numChildren = document.getElementById("list " + category).childNodes.length;

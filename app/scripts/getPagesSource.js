@@ -2,7 +2,7 @@
 
 // helper to check whether a piece of text contains terms of interest
 function containsTOS(text){
-    return (text.search("Terms of Use") != -1) || (text.search("Terms of Service") != -1);
+    return (text.search("Terms of Use") != -1) || (text.search("Terms of Service") != -1) || (text.search("Privacy Policy") != -1);
 }
 
 // highlight the given text of a different color for each category
@@ -60,6 +60,13 @@ function filterSentence(sentence){
     return toReturn;
 }
 
+/*
+// https://www.w3schools.com/jsref/jsref_trim_string.asp
+function myTrim(x) {
+    return x.replace(/^\s+|\s+$/gm,'');
+}
+*/
+
 // clean the sentence by removing extra characters + leftover html tags.
 function cleanupSentence(sentence){
     if (sentence.length > 1000) { return ""; } // get rid of long ones (likely code)
@@ -81,14 +88,17 @@ function cleanupSentence(sentence){
 
     //var clean = sentence.replace(/<(div|\/div|b|\/b|br|\/br|li|\/li|ul|\/ul|p|\/p)[^>]*>/, ' ');
     var clean = sentence.replace(/<[^>]*>/gi, ""); // remove all HTML tags
-    clean = clean.replace(/[^a-z\n\s.,?!-:;\"\']/gi, ' ');
+    clean = clean.replace(/[^a-z .,?!-:;\"\']/gi, ' '); // Replace \s with ' ', see what happens
     clean = clean.replace(/&.t;/g, '');
     clean = clean.replace('&nbsp;', '');
     clean = clean.replace('a href', '');
     clean = clean.replace('/p ', '');
     clean = clean.replace('/a ', '');
     // Replace alternating unquoted and quoted words...
-    clean = clean.replace(/([a-zA-Z-]* "[a-zA-Z- #]*".){2,}/gm, ' ')
+    clean = clean.replace(/([a-zA-Z-]* "[a-zA-Z0-9- #:\/,']*".){2,}/gm, ' ')
+    // Replace more than two spaces in a row with a single space
+    clean = clean.replace(/ {2,}/g, ' ')
+    clean = clean.trim();
 
     if (clean.split(" ").length < 10) { return ""; } // get rid of short ones (likely headers)
 
@@ -111,11 +121,13 @@ function breakIntoSentences(text){
     return finalSentences;
 }
 
+// Credit for hashcode to https://gist.github.com/hyamamoto/fd435505d29ebfa3d9716fd2be8d42f0
 function hashCode(s) {
     for(var i = 0, h = 0; i < s.length; i++)
         h = Math.imul(31, h) + s.charCodeAt(i) | 0;
     return h;
 }
+  
 // convert the document to plain text
 function DOMtoString(document_root) {
     // 1. Grab all the text from the page
@@ -150,13 +162,13 @@ function DOMtoString(document_root) {
             for(var j = 0; j < curSentences.length; j++){
 
                 var cleanSentence = cleanupSentence(curSentences[j]);
-                cleanSentnce = cleanSentence.trim();
 
                 //console.log(cleanSentence)
                 var filters = filterSentence(cleanSentence);
                 if(filters.length > 0 && !(cleanSentence in cleanToRaw)){
                     cleanToRaw[cleanSentence] = curSentences[j];
                     
+                    console.log(cleanSentence);
                     // add to our maps
                     for(f = 0; f < filters.length; f++){
                         var filterFound = filterKeys[filters[f]];
@@ -178,6 +190,7 @@ function DOMtoString(document_root) {
         }
     }
 
+    console.log(keptSentences);
     if(!isTOS) { return null; }
 
     // highlighting
