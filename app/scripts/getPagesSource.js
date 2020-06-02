@@ -90,10 +90,10 @@ function cleanupSentence(sentence){
     var clean = sentence.replace(/<[^>]*>/gi, ""); // remove all HTML tags
     clean = clean.replace(/[^a-z .,?!-:;\"\']/gi, ' '); // Replace \s with ' ', see what happens
     clean = clean.replace(/&.t;/g, '');
-    clean = clean.replace('&nbsp;', '');
-    clean = clean.replace('a href', '');
-    clean = clean.replace('/p ', '');
-    clean = clean.replace('/a ', '');
+    clean = clean.replace(/&nbsp;/g, '');
+    clean = clean.replace(/a href/g, '');
+    clean = clean.replace(/\/p /g, '');
+    clean = clean.replace(/\/a /g, '');
     // Replace alternating unquoted and quoted words...
     clean = clean.replace(/([a-zA-Z-]* "[a-zA-Z0-9- #:\/,']*".){2,}/gm, ' ')
     // Replace more than two spaces in a row with a single space
@@ -163,6 +163,7 @@ function DOMtoString(document_root) {
 
                 var cleanSentence = cleanupSentence(curSentences[j]);
 
+                //console.log(curSentences[j])
                 //console.log(cleanSentence)
                 var filters = filterSentence(cleanSentence);
                 if(filters.length > 0 && !(cleanSentence in cleanToRaw)){
