@@ -40,7 +40,7 @@ var filterDict = [
     /government request|(disclose.*legal|legal.*disclose)|subpoena|lawful interception|release/gmi, // (?=.*\bjack\b)(?=.*\bjames\b).* maybe use this lookaround syntax for disclose and legal, but it's slow!
     /DNT| track |(record.*plugin|plugin.*record)/gmi,
     /(shar.*(part|aggregate|anonymize))|((part|aggregate|anonymize).*shar)/gmi, // Lookaround version: /(?=.*shar.*)(?=.*(part|aggregate|anonymize).*)/gmi,
-    /((info|data|TOS|terms).*(merge|sale|sell|acqui|bankrupt|business|insolven|transfer))|((merge|sale|sell|acqui|bankrupt|business|insolven|transfer).*(info|data|TOS|terms))/gmi, // Lookaround version: 
+    /((info|data|affiliate).*(merge|sale|sell|acqui|bankrupt|insolven|transfer))|((merge|sale|sell|acqui|bankrupt|insolven|transfer).*(info|data|affiliate))/gmi, // Lookaround version: 
     /((stuff|content|submission|property).*(rights|license|property|copyright|reproduce|distribute|modify|owner))|((rights|license|property|copyright|reproduce|distribute|modify|owner).*(stuff|content|submission|property))/gmi,
     /((waive|agree).*(court|arbitration|dispute|injuncti))|((court|arbitration|dispute|injuncti).*(waive|agree))/gmi
 ]
@@ -192,8 +192,8 @@ function DOMtoString(document_root) {
         }
     }
 
-    //console.log(keptSentences);
-    //console.log(numSentences);
+    console.log(keptSentences);
+    console.log(numSentences);
     if(numSentences < 4) { return null; } // Mess with this threshold but i think it's a better method
 
     // highlighting
