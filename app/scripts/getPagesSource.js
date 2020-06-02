@@ -111,6 +111,11 @@ function breakIntoSentences(text){
     return finalSentences;
 }
 
+function hashCode(s) {
+    for(var i = 0, h = 0; i < s.length; i++)
+        h = Math.imul(31, h) + s.charCodeAt(i) | 0;
+    return h;
+}
 // convert the document to plain text
 function DOMtoString(document_root) {
     // 1. Grab all the text from the page
@@ -123,6 +128,7 @@ function DOMtoString(document_root) {
     var keptSentences = {}; // categories -> list of cleaned sentences (for display)
     var cleanToRaw = {}; // cleaned sentence -> raw sentence (for highlighting)
     var keptIDs = {}; // categories -> list of elementIDs (for scroll)
+    var hashes = {}; // string hashes
 
     // iterate over all elements
     for (var i=0; i < all.length; i++) {
@@ -144,8 +150,9 @@ function DOMtoString(document_root) {
             for(var j = 0; j < curSentences.length; j++){
 
                 var cleanSentence = cleanupSentence(curSentences[j]);
+                cleanSentnce = cleanSentence.trim();
 
-                console.log(cleanSentence)
+                //console.log(cleanSentence)
                 var filters = filterSentence(cleanSentence);
                 if(filters.length > 0 && !(cleanSentence in cleanToRaw)){
                     cleanToRaw[cleanSentence] = curSentences[j];
@@ -156,9 +163,14 @@ function DOMtoString(document_root) {
                         if(!(filterFound in keptSentences)){
                             keptSentences[filterFound] = [];
                             keptIDs[filterFound] = [];
+                            hashes[filterFound] = [];
                         }
-                        keptSentences[filterFound].push(cleanSentence);
-                        keptIDs[filterFound].push(curElem.className);
+                        var thisHash = hashCode(cleanSentence.substr(0, 50));
+                        if (!(hashes[filterFound].includes(thisHash))) {
+                            hashes[filterFound].push(thisHash);
+                            keptSentences[filterFound].push(cleanSentence);
+                            keptIDs[filterFound].push(curElem.className);
+                        }
                     }          
                 }
 
