@@ -1,10 +1,17 @@
-# Summarize Me
+# Terms of Service Summary
 
-TODO: add our git links
-Maintainer: [Vishnu Sarukkai, Melinda Wang and Alexandre Bucquet](https://github.com/samuelklam)
+Maintainers: [Vishnu Sarukkai](https://github.com/VSAnimator), [Melinda Wang](https://github.com/melywang),  [Alexandre Bucquet](https://github.com/abucquet)
 
-TODO: change summary and write up a detailed description
-> A nifty Chrome Extension that provides a summary of the current web page or user selected text through a (right-click) context menu action.
+> A Chrome extension that extract a few important sentences from a Terms of Services/Terms of Use page.
+
+This chrome extension uses pattern matching to surface sentences related to different areas of Terms of Services. Currently, the extension supports five categories:
+
+- Government: whether or not the service will give governments access to user accounts/data.
+- Tracking: whether or not the service will track users on third-party websites.
+- Share: to what extent the service will share user data.
+- Sell: whether or not the service will share user data with third party websites.
+- Copyright: who owns user data on the service.
+- Court: what rights users/the service have to go to court and how disputes will be settled.
 
 ## Examples
 Browser Action
@@ -14,14 +21,10 @@ Context Menu
 ![Context Menu](app/images/context-menu-demo2.png)
 
 ## Implementation
-Summarize Me uses the [Text Summarization API](https://market.mashape.com/textanalysis/text-summarization) to extract and summarize important text from a URL or user selected text. Text Summarization uses Natural Language Processing and Machine Learning technologies to process text.
+Terms of Service Summary uses regular expressions to surface relevant sentences after parsing the page. The only package dependencies are [JQuery](https://jquery.com/) and [Mark.js](https://markjs.io/).
 
-This chrome extension also dabbles with [IBM Watson Developer Cloud](https://www.ibm.com/watson/developercloud/alchemy-language.html) to provide sentiment analysis of the current page.
-
-## Test Chrome Extension
-To load Summarize Me, run ```npm install```, go to chrome://extensions, enable Developer mode and load the app as an unpacked extension. Note: you will need to register and use your own API key from [Mashape](https://market.mashape.com/textanalysis/text-summarization).
-
-To experiment with the Alchemy API, run ```npm start``` to start the server.
+## Test the Chrome Extension
+To load this extension, run ```npm install```, go to chrome://extensions, enable Developer mode and load the app as an unpacked extension. Note: you can also access this extension on the Chrome store using this link (app is unlisted, still in beta phase).
 
 ## Contributing
-External contributions in the form of feedback, bug reports or pull requests are always welcome!
+External contributions are most welcome! We always are looking to find more categories that will be useful for our users, tune our current pattern-matching pipeline, and most importantly hear about bugs you might find. 
