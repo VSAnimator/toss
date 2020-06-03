@@ -29,7 +29,7 @@ To load this extension, run ```npm install```, go to chrome://extensions, enable
 
 ## Other resources
 ## TODO: add link for our post
-For more information, feel free to go check out our [Medium Post]()! 
+For more information, feel free to go check out our [Medium Post](), or this [explanatory video](https://vimeo.com/425369454).
 
 ## Contributing
 External contributions are most welcome! We always are looking to find more categories that will be useful for our users, tune our current pattern-matching pipeline, and most importantly hear about bugs you might find. 
