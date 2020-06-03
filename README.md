@@ -14,8 +14,8 @@ This chrome extension uses pattern matching to surface sentences related to diff
 - Court: what rights users/the service have to go to court and how disputes will be settled.
 
 ## Examples
-Browser Action
-![Browser Action](images/browser-view.png)
+Browser View
+![Browser View](images/browser-view.png)
 
 Pop-Up Menus
 ![Pop-Up Menus](images/popup-view.png)
