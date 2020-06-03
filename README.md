@@ -14,12 +14,11 @@ This chrome extension uses pattern matching to surface sentences related to diff
 - Court: what rights users/the service have to go to court and how disputes will be settled.
 
 ## Examples
-## TODO: add our own images
 Browser Action
-![Browser Action](app/images/browser-action-demo.png)
+![Browser Action](images/browser-view.png)
 
-Context Menu
-![Context Menu](app/images/context-menu-demo2.png)
+Pop-Up Menus
+![Pop-Up Menus](images/popup-view.png)
 
 ## Implementation
 Terms of Service Summary uses regular expressions to surface relevant sentences after parsing the page. The only package dependencies are [JQuery](https://jquery.com/) and [Mark.js](https://markjs.io/).
