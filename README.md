@@ -36,7 +36,6 @@ This extension also has the usual style files (styles/main.css and styles/custom
 To load this extension, run ```npm install```, go to chrome://extensions, enable Developer mode and load the app as an unpacked extension. Note: you can also access this extension on the Chrome store using this link (app is unlisted, still in beta phase).
 
 ## Other resources
-## TODO: add link for our post
 For more information, feel free to go check out our [Medium Post](https://medium.com/@alexandre_82378/chrome-extension-terms-of-service-summary-beta-e8c6bdf57d9c), or this [explanatory video](https://vimeo.com/425369454).
 
 ## Contributing
