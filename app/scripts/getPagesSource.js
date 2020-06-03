@@ -109,7 +109,7 @@ function cleanupSentence(sentence){
 function breakIntoSentences(text){
     var finalSentences = [];
 
-    var firstIteration = text.split(/[A-Za-z]\.(\s|\"|\'|\|![A-Za-z0-9])/);
+    var firstIteration = text.split(/\.(\s|\"|\'|\|![A-Za-z0-9])/);
 
     for(var k = 0; k < firstIteration.length; k++){
         var secondIteration = firstIteration[k].split(/(<b>|<br>|<div>|<li>|<ul>)/);
@@ -139,7 +139,6 @@ function DOMtoString(document_root) {
     // three maps:
     var keptSentences = {}; // categories -> list of cleaned sentences (for display)
     var cleanToRaw = {}; // cleaned sentence -> raw sentence (for highlighting)
-    var keptIDs = {}; // categories -> list of elementIDs (for scroll)
     var hashes = {}; // string hashes
 
     // iterate over all elements
@@ -175,14 +174,12 @@ function DOMtoString(document_root) {
                         var filterFound = filterKeys[filters[f]];
                         if(!(filterFound in keptSentences)){
                             keptSentences[filterFound] = [];
-                            keptIDs[filterFound] = [];
                             hashes[filterFound] = [];
                         }
                         var thisHash = hashCode(cleanSentence.substr(0, 50));
                         if (!(hashes[filterFound].includes(thisHash))) {
                             hashes[filterFound].push(thisHash);
                             keptSentences[filterFound].push(cleanSentence);
-                            keptIDs[filterFound].push(curElem.className);
                             numSentences += 1;
                         }
                     }          
@@ -206,7 +203,6 @@ function DOMtoString(document_root) {
     }
     return JSON.stringify({
         "sentences": keptSentences,
-         "ids": keptIDs,
          "cleanToRaw": cleanToRaw
      });
 }

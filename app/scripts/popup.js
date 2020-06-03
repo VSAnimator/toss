@@ -4,23 +4,16 @@
 var searchResults = null;
 var buttonStyle = "font-size:24px;color:#B9B9B9;"
 
-/*
-function isHidden(el) {
-  return (el.offsetParent === null)
-}*/
-
 // helper function to add text to correct subdivision
 function displayText(category, resultDict){
   var numChildren = document.getElementById("list " + category).childNodes.length;
   // Okay so as long as we don't mess with the html format numChildren will be 1 before anything is entered, but even comments will mess this up
-  // TEMPORARY FIX
   console.log(numChildren)
   if (numChildren > 1) {
     return;
   }
 
   var textList = resultDict["sentences"][category];
-  var idList = resultDict["ids"][category]; // try to use id for scrolling: usually empty :/
   var categoryList = document.getElementById("list " + category);
 
   console.log(textList)
@@ -177,8 +170,6 @@ function goToHighlighted(id) {
       rawSentence = splitRaw[i]
     }
   }
-
-  message.innerText = rawSentence;
 
   var params = {"sentence" : rawSentence, "category" : category};
 
