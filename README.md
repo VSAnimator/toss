@@ -14,6 +14,7 @@ This chrome extension uses pattern matching to surface sentences related to diff
 - Court: what rights users/the service have to go to court and how disputes will be settled.
 
 ## Examples
+## TODO: add our own images
 Browser Action
 ![Browser Action](app/images/browser-action-demo.png)
 
@@ -25,6 +26,10 @@ Terms of Service Summary uses regular expressions to surface relevant sentences 
 
 ## Test the Chrome Extension
 To load this extension, run ```npm install```, go to chrome://extensions, enable Developer mode and load the app as an unpacked extension. Note: you can also access this extension on the Chrome store using this link (app is unlisted, still in beta phase).
+
+## Other resources
+## TODO: add link for our post
+For more information, feel free to go check out our [Medium Post]()! 
 
 ## Contributing
 External contributions are most welcome! We always are looking to find more categories that will be useful for our users, tune our current pattern-matching pipeline, and most importantly hear about bugs you might find. 
